@@ -27,7 +27,7 @@ func _ready() -> void:
 	# Hook up the End Turn button
 	$"UI/Control/UIStack/EndTurnButton".pressed.connect(_on_end_turn_pressed)
 	_update_turn_label()
-	_update_season_label()
+
 
 func _register_cities() -> void:
 	cities.clear()
@@ -60,19 +60,12 @@ func _on_end_turn_pressed() -> void:
 	_apply_current_seasons(false)
 	turn_advanced.emit(turn_idx)
 	_update_turn_label()
-	_update_season_label()
 
 func _update_turn_label() -> void:
-	var seasonalTurn: int = turn_idx%3 + 1
-	$"UI/Control/UIStack/TurnLabel".text = "Turn: %d/3" % seasonalTurn
+	var seasonalTurn: int = turn_idx%TURNS_PER_SEASON_STEP + 1
+	$"UI/Control/UIStack/TurnLabel".text = "Turn: %d/%s" % [seasonalTurn, TURNS_PER_SEASON_STEP]
 
-func _update_season_label() -> void:
-	if cities.size() > 0:
-		var first_city_id = cities[0]["id"]
-		var current_season = city_season.get(first_city_id, "unknown")
-		$"UI/Control/UIStack/SeasonLabel".text = "Season: %s" % current_season.capitalize()
-	else:
-		$"UI/Control/UIStack/SeasonLabel".text = "Season: unknown"
+
 
 func _load_biome_deltas() -> void:
 	var file_path := "res://data/biome_resources.json"
@@ -160,7 +153,7 @@ func _build_schedule_for_biome(biome: String) -> Array[String]:
 	
 	if sequence.is_empty():
 		push_warning("No sequence found for biome '%s', using default" % biome)
-		return ["winter", "spring", "summer", "fall"]
+		return ["spring", "summer", "fall", "winter"]
 	
 	# Convert the sequence to Array[String]
 	var result: Array[String] = []
@@ -169,7 +162,7 @@ func _build_schedule_for_biome(biome: String) -> Array[String]:
 	
 	return result
 
-# --------- effects
+# --------- effects - not yet fully implemented
 
 func _effective_for_city(city: Dictionary, season: String) -> Dictionary:
 	var base: Dictionary = city["base"].duplicate(true)
