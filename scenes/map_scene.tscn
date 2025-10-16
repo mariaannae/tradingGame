@@ -1,0 +1,107 @@
+[gd_scene load_steps=9 format=3 uid="uid://bp408kebckug"]
+
+[ext_resource type="Texture2D" uid="uid://o4fb4xays43t" path="res://icon.svg" id="1_0wcw4"]
+[ext_resource type="Script" uid="uid://bgcrj76vkkg6s" path="res://scripts/turns_and_seasons.gd" id="1_5m4q6"]
+[ext_resource type="PackedScene" uid="uid://dutxtsat7w2un" path="res://scenes/city.tscn" id="2_ne7uw"]
+[ext_resource type="Texture2D" uid="uid://dvp0ln4xi3ao0" path="res://art/map.png" id="2_vsh3c"]
+[ext_resource type="Script" uid="uid://dnpfvojfm741g" path="res://scripts/background_scaling.gd" id="3_jlqwp"]
+[ext_resource type="Texture2D" uid="uid://bgo87bnagg7xk" path="res://art/parchment.png" id="4_parchment"]
+[ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="5_jlqwp"]
+[ext_resource type="Script" uid="uid://cn1u4qb4srfwg" path="res://scripts/parchment_background.gd" id="5_parchment"]
+
+[node name="MapScene" type="Node2D"]
+script = ExtResource("1_5m4q6")
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(0.30139536, 0.30139536)
+texture = ExtResource("2_vsh3c")
+script = ExtResource("3_jlqwp")
+
+[node name="Cities" type="Node2D" parent="."]
+
+[node name="Draugaholt" parent="Cities" instance=ExtResource("2_ne7uw")]
+position = Vector2(-278, -256)
+city_name = "Draugaholt"
+icon_texture = ExtResource("1_0wcw4")
+
+[node name="Yalanga" parent="Cities" instance=ExtResource("2_ne7uw")]
+position = Vector2(275, 123)
+city_name = "Yalanga"
+biome = "warm"
+
+[node name="Corvienne" parent="Cities" instance=ExtResource("2_ne7uw")]
+position = Vector2(-236, -13)
+city_name = "Corvienne"
+biome = "coastal"
+
+[node name="Tenzura" parent="Cities" instance=ExtResource("2_ne7uw")]
+position = Vector2(385, -26)
+city_name = "Tenzura"
+biome = "steppe"
+
+[node name="Meiyara" parent="Cities" instance=ExtResource("2_ne7uw")]
+position = Vector2(-320, 158)
+city_name = "Meiyara"
+biome = "warm"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -1.0
+offset_right = -2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ParchmentBackground" type="TextureRect" parent="UI/Control"]
+modulate = Color(0.729, 0.631, 0.467, 1)
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+texture = ExtResource("4_parchment")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("5_parchment")
+padding = 30.0
+
+[node name="UIStack" type="VBoxContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EndTurnButton" type="Button" parent="UI/Control/UIStack"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = ExtResource("5_jlqwp")
+text = "End Turn"
+autowrap_trim_flags = 192
+icon_alignment = 1
+
+[node name="TurnLabel" type="Label" parent="UI/Control/UIStack"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Turn: 0/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SeasonLabel" type="Label" parent="UI/Control/UIStack"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "test"
+horizontal_alignment = 1
+vertical_alignment = 1

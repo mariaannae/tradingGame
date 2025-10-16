@@ -1,0 +1,18 @@
+{
+  "steppe": {
+	"sequence": ["spring", "summer", "fall", "winter"],
+	"description": "Grasslands with hot summers and mild winters"
+  },
+  "coastal": {
+	"sequence": ["spring", "summer", "fall", "winter"],
+	"description": "Temperate maritime climate with balanced seasons"
+  },
+  "cold": {
+	"sequence": ["winter", "winter", "spring", "spring"],
+	"description": "Arctic regions with very long winters"
+  },
+  "warm": {
+	"sequence": ["spring", "summer", "summer", "fall"],
+	"description": "Tropical regions with extended warm periods"
+  }
+}

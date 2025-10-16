@@ -1,0 +1,61 @@
+# Godot-specific
+.import/
+export.cfg
+export_presets.cfg
+
+# User-specific editor data
+.godot/
+.editor_settings-*.tres
+.cache/
+.logs/
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build outputs
+*.exe
+*.pck
+*.zip
+*.apk
+*.aab
+*.xcodeproj
+*.xcworkspace
+*.vs/
+*.vcxproj*
+*.sln
+*.pyc
+
+# Temporary exports / deploys
+build/
+dist/
+export/
+bin/
+
+# Godot 4 C# (if you ever enable Mono)
+.mono/
+*.csproj
+*.sln
+*.user
+*.vsconfig
+*.dll
+*.mdb
+*.pdb
+
+# Editor backups
+*.import
+*.tmp
+*.swp
+*.bak
+*.old
+*.orig
+
+
+# macOS system junk
+.DS_Store
+*/.DS_Store
+**/.DS_Store
+
+# VS Code workspace settings
+.vscode/
