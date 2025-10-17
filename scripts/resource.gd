@@ -22,9 +22,15 @@ func load_from_dict(data: Dictionary) -> void:
 	if "base_price" in data:
 		base_price = data["base_price"]
 	if "favored_season" in data:
-		favored_season = data["favored_season"]
+		var temp_seasons: Array[String] = []
+		for item in data["favored_season"]:
+			temp_seasons.append(String(item))
+		favored_season = temp_seasons
 	if "local_biomes" in data:
-		local_biomes = data["local_biomes"]
+		var temp_biomes: Array[String] = []
+		for item in data["local_biomes"]:
+			temp_biomes.append(String(item))
+		local_biomes = temp_biomes
 	if "event_modifiers" in data:
 		event_modifiers = data["event_modifiers"]
 	current_price = base_price

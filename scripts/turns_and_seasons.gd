@@ -6,10 +6,10 @@ signal turn_advanced(turn_index: int)
 const TURNS_PER_SEASON_STEP : int = 3  # seasons change every 3 turns for now
 
 
-# biome deltas loaded from JSON (seasonal effect modifiers)
-var biome_deltas := {}
 # biome seasonal sequences loaded from JSON
 var biome_sequences := {}
+# all game resources loaded from JSON
+var all_resources := {}
 
 var cities := []                 # list of dictionaries (metadata + node)
 var city_schedule := {}          # id -> Array[String]
@@ -19,7 +19,7 @@ var city_effective := {}         # id -> Dictionary
 var turn_idx := 0
 
 func _ready() -> void:
-	_load_biome_deltas()
+	_load_resources()
 	_load_biome_sequences()
 	_register_cities()
 	_build_schedules_for_all()
@@ -67,28 +67,9 @@ func _update_turn_label() -> void:
 
 
 
-func _load_biome_deltas() -> void:
-	var file_path := "res://data/biome_resources.json"
-	if not FileAccess.file_exists(file_path):
-		push_error("Biome deltas file not found: %s" % file_path)
-		return
-	
-	var file := FileAccess.open(file_path, FileAccess.READ)
-	if file == null:
-		push_error("Failed to open biome deltas file: %s" % file_path)
-		return
-	
-	var json_string := file.get_as_text()
-	file.close()
-	
-	var json := JSON.new()
-	var error := json.parse(json_string)
-	if error != OK:
-		push_error("Failed to parse biome deltas JSON: %s" % json.get_error_message())
-		return
-	
-	biome_deltas = json.get_data()
-	print("Loaded biome deltas for %d biomes" % biome_deltas.size())
+func _load_resources() -> void:
+	all_resources = ResourceData.load_resources_from_json("res://data/resources.json")
+	print("Loaded %d resources from resources.json" % all_resources.size())
 
 func _load_biome_sequences() -> void:
 	var file_path := "res://data/biome_seasons.json"
@@ -143,7 +124,8 @@ func _apply_current_seasons(force_emit:=false) -> void:
 		if changed:
 			city_season_changed.emit(c["id"], s, eff)
 			if c["node"].has_method("set_season_visual"):
-				c["node"].set_season_visual(s)
+				var resources: Array[String] = eff.get("resources", [])
+				c["node"].set_season_visual(s, resources)
 
 # --------- schedules (loaded from biome JSON data)
 
@@ -162,13 +144,25 @@ func _build_schedule_for_biome(biome: String) -> Array[String]:
 	
 	return result
 
-# --------- effects - not yet fully implemented
+# --------- resource filtering
 
 func _effective_for_city(city: Dictionary, season: String) -> Dictionary:
-	var base: Dictionary = city["base"].duplicate(true)
-	var biome := String(city.get("biome",""))
-	var deltas: Dictionary = biome_deltas.get(biome, {}).get(season, {})
-	var out := base.duplicate(true)
-	for k in deltas.keys():
-		out[k] = int(clamp(float(out.get(k, 0)) + float(deltas[k]), 0.0, 10.0))
-	return out
+	var biome := String(city.get("biome", ""))
+	var available_resources := _get_city_resources(biome, season)
+	return {
+		"resources": available_resources
+	}
+
+func _get_city_resources(biome: String, season: String) -> Array[String]:
+	var result: Array[String] = []
+	
+	for resource_name in all_resources.keys():
+		var resource: ResourceData = all_resources[resource_name]
+		
+		# Check if resource is local to this biome
+		if resource.is_local_to(biome):
+			# Check if it's in season (or if we want to show all local resources)
+			if season in resource.favored_season:
+				result.append(resource_name)
+	
+	return result
