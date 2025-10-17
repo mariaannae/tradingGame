@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://o4fb4xays43t" path="res://icon.svg" id="1_0wcw4"]
 [ext_resource type="Script" uid="uid://bgcrj76vkkg6s" path="res://scripts/turns_and_seasons.gd" id="1_5m4q6"]
 [ext_resource type="PackedScene" uid="uid://dutxtsat7w2un" path="res://scenes/city.tscn" id="2_ne7uw"]
-[ext_resource type="Texture2D" uid="uid://dvp0ln4xi3ao0" path="res://art/map.png" id="2_vsh3c"]
+[ext_resource type="Texture2D" uid="uid://cpqxdma1h3qcy" path="res://art/map.png" id="2_vsh3c"]
 [ext_resource type="Script" uid="uid://dnpfvojfm741g" path="res://scripts/background_scaling.gd" id="3_jlqwp"]
-[ext_resource type="Texture2D" uid="uid://bgo87bnagg7xk" path="res://art/parchment.png" id="4_parchment"]
+[ext_resource type="Texture2D" uid="uid://dw2ksgj3y8ngd" path="res://art/parchment.png" id="4_parchment"]
 [ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="5_jlqwp"]
 [ext_resource type="Script" uid="uid://cn1u4qb4srfwg" path="res://scripts/parchment_background.gd" id="5_parchment"]
 
@@ -64,7 +64,8 @@ grow_vertical = 2
 [node name="ParchmentBackground" type="TextureRect" parent="UI/Control"]
 modulate = Color(0.729, 0.631, 0.467, 1)
 layout_mode = 0
-offset_right = 100.0
+offset_left = -18.0
+offset_right = 137.0
 offset_bottom = 100.0
 texture = ExtResource("4_parchment")
 expand_mode = 1

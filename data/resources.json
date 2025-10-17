@@ -1,0 +1,210 @@
+{
+
+	"beans": {
+		"texture": "res://art/resources/beans.png",
+		"category": "food",
+		"base_price": 10,
+		"favored_season": ["summer", "fall"],
+		"local_biomes": ["warm", "coastal"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"bok-choy": {
+		"texture": "res://art/resources/bok-choy.png",
+		"category": "food",
+		"base_price": 12,
+		"favored_season": ["spring", "fall"],
+		"local_biomes": ["warm", "coastal"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"diamond": {
+		"texture": "res://art/resources/diamond.png",
+		"category": "luxury",
+		"base_price": 300,
+		"favored_season": ["winter"],
+		"local_biomes": ["cold", "steppe"],
+		"event_modifiers": {"mine_collapse": 2.0, "royal_festival": 1.5}
+	},
+
+	"eggplant": {
+		"texture": "res://art/resources/eggplant.png",
+		"category": "food",
+		"base_price": 14,
+		"favored_season": ["summer"],
+		"local_biomes": ["warm", "coastal"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"gold": {
+		"texture": "res://art/resources/gold.png",
+		"category": "luxury",
+		"base_price": 250,
+		"favored_season": ["winter"],
+		"local_biomes": ["steppe", "mountain"],
+		"event_modifiers": {"mine_collapse": 2.0, "royal_festival": 1.5}
+	},
+
+	"honey": {
+		"texture": "res://art/resources/honey.png",
+		"category": "food",
+		"base_price": 25,
+		"favored_season": ["spring", "summer"],
+		"local_biomes": ["warm", "coastal"],
+		"event_modifiers": {"bee_disease": 2.0, "harvest_festival": 0.8}
+	},
+
+	"jewelry": {
+		"texture": "res://art/resources/jewelry.png",
+		"category": "luxury",
+		"base_price": 200,
+		"favored_season": ["winter"],
+		"local_biomes": ["coastal", "steppe"],
+		"event_modifiers": {"royal_festival": 1.5, "bandit_raid": 2.0}
+	},
+
+	"livestock": {
+		"texture": "res://art/resources/livestock.png",
+		"category": "trade_good",
+		"base_price": 40,
+		"favored_season": ["spring", "summer"],
+		"local_biomes": ["steppe", "warm"],
+		"event_modifiers": {"disease_outbreak": 2.0, "harvest_festival": 0.9}
+	},
+
+	"maize": {
+		"texture": "res://art/resources/maize.png",
+		"category": "food",
+		"base_price": 10,
+		"favored_season": ["summer"],
+		"local_biomes": ["warm", "steppe"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"mushroom": {
+		"texture": "res://art/resources/mushroom.png",
+		"category": "food",
+		"base_price": 18,
+		"favored_season": ["fall"],
+		"local_biomes": ["cold", "warm"],
+		"event_modifiers": {"blight": 2.0, "harvest_festival": 0.7}
+	},
+
+	"ore": {
+		"texture": "res://art/resources/ore.png",
+		"category": "material",
+		"base_price": 60,
+		"favored_season": ["winter"],
+		"local_biomes": ["steppe", "cold"],
+		"event_modifiers": {"mine_collapse": 2.0, "smiths_fair": 1.2}
+	},
+
+	"parchment": {
+		"texture": "res://art/resources/parchment.png",
+		"category": "crafted",
+		"base_price": 30,
+		"favored_season": ["fall", "winter"],
+		"local_biomes": ["coastal", "warm"],
+		"event_modifiers": {"scholars_fair": 1.4, "bandit_raid": 1.8}
+	},
+
+	"peach": {
+		"texture": "res://art/resources/peach.png",
+		"category": "food",
+		"base_price": 15,
+		"favored_season": ["summer"],
+		"local_biomes": ["warm", "coastal"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"persimmon": {
+		"texture": "res://art/resources/persimmon.png",
+		"category": "food",
+		"base_price": 16,
+		"favored_season": ["fall"],
+		"local_biomes": ["warm", "coastal"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"plum": {
+		"texture": "res://art/resources/plum.png",
+		"category": "food",
+		"base_price": 14,
+		"favored_season": ["summer"],
+		"local_biomes": ["warm", "coastal"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"potato": {
+		"texture": "res://art/resources/potato.png",
+		"category": "food",
+		"base_price": 8,
+		"favored_season": ["fall"],
+		"local_biomes": ["cold", "steppe"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"radish": {
+		"texture": "res://art/resources/radish.png",
+		"category": "food",
+		"base_price": 9,
+		"favored_season": ["spring", "fall"],
+		"local_biomes": ["warm", "cold"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"seeds": {
+		"texture": "res://art/resources/seeds.png",
+		"category": "trade_good",
+		"base_price": 12,
+		"favored_season": ["spring"],
+		"local_biomes": ["warm", "steppe"],
+		"event_modifiers": {"blight": 2.0, "harvest_festival": 0.8}
+	},
+
+	"strawberry": {
+		"texture": "res://art/resources/strawberry.png",
+		"category": "food",
+		"base_price": 18,
+		"favored_season": ["spring", "summer"],
+		"local_biomes": ["warm", "coastal"],
+		"event_modifiers": {"food_shortage": 1.8, "harvest_festival": 0.7}
+	},
+
+	"sword": {
+		"texture": "res://art/resources/sword.png",
+		"category": "weapon",
+		"base_price": 120,
+		"favored_season": ["summer", "fall"],
+		"local_biomes": ["steppe", "cold"],
+		"event_modifiers": {"war_outbreak": 2.0, "peace_treaty": 0.8}
+	},
+
+	"wine": {
+		"texture": "res://art/resources/wine.png",
+		"category": "luxury",
+		"base_price": 50,
+		"favored_season": ["fall"],
+		"local_biomes": ["warm", "coastal"],
+		"event_modifiers": {"harvest_festival": 0.8, "wine_shortage": 2.0}
+	},
+
+	"winter-berry": {
+		"texture": "res://art/resources/winter-berry.png",
+		"category": "food",
+		"base_price": 22,
+		"favored_season": ["winter"],
+		"local_biomes": ["cold", "coastal"],
+		"event_modifiers": {"food_shortage": 1.8, "winter_festival": 0.7}
+	},
+
+	"winter-fruit": {
+		"texture": "res://art/resources/winter-fruit.png",
+		"category": "food",
+		"base_price": 20,
+		"favored_season": ["winter"],
+		"local_biomes": ["cold", "steppe"],
+		"event_modifiers": {"food_shortage": 1.8, "winter_festival": 0.7}
+	}
+
+}
