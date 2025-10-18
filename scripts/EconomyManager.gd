@@ -27,30 +27,39 @@ func initialize()-> void:
 	_initUI()
 	print("EconomySystem ready. Current money =", current_money)
 	
+	#TODO: test
+	try_to_buy("ore",10)
+	try_to_buy("peach",10)
+	try_to_sell("peach",5)
+	
 func get_money() -> int:
 	return current_money
 	
-func try_to_buy(item: ResourceData, quantity: int, season: String = "", events: Array[String] = []) -> bool:
+func try_to_buy(itemName: String, quantity: int, season: String = "", events: Array[String] = []) -> bool:
 	if quantity <= 0:
 		return false
-
+	
+	var item=resources_dict[itemName]
 	var price_per_item = item.get_price(season, events)
 	var total_cost = price_per_item * quantity
 
 	if _spend_money(total_cost):
-		var current_count = stock.get(item, 0)
-		stock[item] = current_count + quantity
-		print("Bought %d x %s for %.2f, now have %d" % [quantity, item.category, total_cost, stock[item]])
+		var current_count = stock.get(itemName, 0)
+		stock[itemName] = current_count + quantity
+		print("Bought %d x %s for %.2f, now have %d" % [quantity, item.category, total_cost, stock[itemName]])
+		_updateUI()
 		return true
 	else:
 		print("Cannot afford %d x %s (need %.2f)" % [quantity, item.category, total_cost])
 		return false
-
-func try_to_sell(item: ResourceData, quantity: int, season: String = "", events: Array[String] = []) -> bool:
+		
+	
+func try_to_sell(itemName: String, quantity: int, season: String = "", events: Array[String] = []) -> bool:
 	if quantity <= 0:
 		return false
-
-	var current_count = stock.get(item, 0)
+		
+	var item=resources_dict[itemName]
+	var current_count = stock.get(itemName, 0)
 	if current_count < quantity:
 		print("Not enough %s to sell! Have %d, need %d" % [item.category, current_count, quantity])
 		return false
@@ -58,15 +67,18 @@ func try_to_sell(item: ResourceData, quantity: int, season: String = "", events:
 	var price_per_item = item.get_price(season, events)
 	var total_gain = price_per_item * quantity
 
-	stock[item] = current_count - quantity
+	stock[itemName] = current_count - quantity
 	_add_money(total_gain)
 
-	print("Sold %d x %s for %.2f, remaining %d" % [quantity, item.category, total_gain, stock[item]])
+	print("Sold %d x %s for %.2f, remaining %d" % [quantity, item.category, total_gain, stock[itemName]])
+	_updateUI()
 	return true
+	
 #region --------------- UI ---------------------------
 @export var stockUI: PackedScene
 @export var UIGrid: GridContainer
 var resourceUIs := {}
+var resources_dict := {}
 func _initUI() -> void:
 	var map_scene = get_node(MapScenePath)
 	
@@ -74,7 +86,7 @@ func _initUI() -> void:
 		push_error("MapScene not found at path: %s" % MapScenePath)
 		return
 
-	var resources_dict = map_scene.all_resources
+	resources_dict = map_scene.all_resources
 	if typeof(resources_dict) != TYPE_DICTIONARY:
 		push_error("MapScene.all_resources is not a Dictionary")
 		return
@@ -92,10 +104,17 @@ func _initUI() -> void:
 				icon_node.texture = resource.texture
 			else:
 				push_warning("Icon node not found or not TextureRect")
-			UIGrid.add_child(ui_instance)             
+			UIGrid.add_child(ui_instance)            
 			resourceUIs[name] = ui_instance
 		else:
 			push_error("stockUI PackedScene not assigned!")
 
-	
+@export var money_contorl:Control
+func _updateUI() -> void:
+	for name in resources_dict.keys():
+		var label_node = resourceUIs[name].find_child("Label")
+		if label_node and label_node is Label:
+				label_node.text = str(stock.get(name,0))
+	var money_label_node = money_contorl.find_child("Label")
+	money_label_node.text=" Money: " + str(current_money)
 #endregion

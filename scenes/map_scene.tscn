@@ -131,8 +131,23 @@ theme_override_constants/h_separation = 80
 theme_override_constants/v_separation = 40
 columns = 5
 
-[node name="EconomyManager" type="Node" parent="." node_paths=PackedStringArray("UIGrid")]
+[node name="MoneyControl" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="UI/MoneyControl"]
+layout_mode = 0
+offset_left = -520.0
+offset_right = -463.0
+offset_bottom = 23.0
+text = "Money:"
+
+[node name="EconomyManager" type="Node" parent="." node_paths=PackedStringArray("UIGrid", "money_contorl")]
 script = ExtResource("9_raa3b")
 MapScenePath = NodePath("..")
 stockUI = ExtResource("10_u73mt")
 UIGrid = NodePath("../UI/StockControl/StockUIGrid")
+money_contorl = NodePath("../UI/MoneyControl")
