@@ -1,25 +1,26 @@
-[gd_scene load_steps=14 format=3 uid="uid://bp408kebckug"]
+[gd_scene load_steps=16 format=3 uid="uid://bp408kebckug"]
 
 [ext_resource type="Texture2D" uid="uid://o4fb4xays43t" path="res://icon.svg" id="1_0wcw4"]
 [ext_resource type="Script" uid="uid://bgcrj76vkkg6s" path="res://scripts/turns_and_seasons.gd" id="1_5m4q6"]
 [ext_resource type="PackedScene" uid="uid://dutxtsat7w2un" path="res://scenes/city.tscn" id="2_ne7uw"]
-[ext_resource type="Texture2D" uid="uid://blly5ov4ih8mm" path="res://art/map.png" id="2_vsh3c"]
+[ext_resource type="Texture2D" uid="uid://cpqxdma1h3qcy" path="res://art/map.png" id="2_vsh3c"]
 [ext_resource type="Script" uid="uid://dnpfvojfm741g" path="res://scripts/background_scaling.gd" id="3_jlqwp"]
 [ext_resource type="Texture2D" uid="uid://dw2ksgj3y8ngd" path="res://art/parchment.png" id="4_parchment"]
 [ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="5_jlqwp"]
 [ext_resource type="Script" uid="uid://cn1u4qb4srfwg" path="res://scripts/parchment_background.gd" id="5_parchment"]
 [ext_resource type="Script" uid="uid://uyrt6sms65sr" path="res://scripts/EconomyManager.gd" id="9_raa3b"]
-[ext_resource type="PackedScene" uid="uid://d4bslqs40km5x" path="res://scenes/StockUI.tscn" id="10_u73mt"]
+[ext_resource type="PackedScene" uid="uid://c5ouyy55xd8a4" path="res://scenes/UI/buyPage.tscn" id="10_tk4s2"]
+[ext_resource type="PackedScene" uid="uid://d4bslqs40km5x" path="res://scenes/UI/StockUI.tscn" id="10_u73mt"]
 [ext_resource type="PackedScene" uid="uid://dbum560abgpsd" path="res://scenes/player.tscn" id="11_f0c3g"]
 [ext_resource type="Script" uid="uid://fmmff4hjpyih" path="res://scripts/random_event_manager.gd" id="11_od1u7"]
+[ext_resource type="PackedScene" uid="uid://shs7tm7tjuxb" path="res://scenes/UI/resourceButton.tscn" id="11_xb8oc"]
 [ext_resource type="Script" uid="uid://b5jc87om2rw51" path="res://scripts/event_popup.gd" id="13_l1wjf"]
 
 [node name="MapScene" type="Node2D"]
 script = ExtResource("1_5m4q6")
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(-1.0000007, 1.9999533)
-scale = Vector2(0.89687496, 0.9027778)
+scale = Vector2(0.9, 0.9)
 texture = ExtResource("2_vsh3c")
 script = ExtResource("3_jlqwp")
 
@@ -116,6 +117,7 @@ offset_left = -400.0
 offset_top = 13.0
 offset_bottom = 345.0
 pivot_offset = Vector2(400, 1)
+mouse_filter = 2
 theme_override_constants/h_separation = 80
 theme_override_constants/v_separation = 40
 columns = 5
@@ -152,6 +154,7 @@ offset_right = -10.0
 offset_bottom = 89.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="UIStack" type="VBoxContainer" parent="UI/Control"]
 layout_mode = 1
@@ -192,6 +195,12 @@ expand_mode = 1
 stretch_mode = 5
 script = ExtResource("5_parchment")
 padding = 30.0
+
+[node name="BuyPage" parent="UI" node_paths=PackedStringArray("economyManager", "turns", "cityNodes") instance=ExtResource("10_tk4s2")]
+resourceButton = ExtResource("11_xb8oc")
+economyManager = NodePath("../../EconomyManager")
+turns = NodePath("../..")
+cityNodes = NodePath("../../Cities")
 
 [node name="EconomyManager" type="Node" parent="." node_paths=PackedStringArray("UIGrid", "end_turn_button", "money_contorl")]
 script = ExtResource("9_raa3b")

@@ -1,4 +1,5 @@
 extends Node
+class_name EconomyManager
 
 @export var start_money: int = 1000
 @export var MapScenePath: NodePath
@@ -6,6 +7,7 @@ var current_money: int = 0
 var stock: Dictionary = {}
 #var res_Dic: Dictionary = {}
 var resources_dict := {}
+var eventNames : Array[String]
 
 @onready var event_manager = $RandomEventManager
 @onready var event_popup = $"../UI/EventPopup"
@@ -52,20 +54,16 @@ func initialize()-> void:
 		
 	print("EconomySystem ready. Current money =", current_money)
 	
-	#TODO: test
-	try_to_buy("ore",10)
-	try_to_buy("peach",10)
-	try_to_sell("peach",5)
 	
 func get_money() -> int:
 	return current_money
 	
-func try_to_buy(itemName: String, quantity: int, season: String = "", events: Array[String] = []) -> bool:
+func try_to_buy(itemName: String, quantity: int, season: String = "") -> bool:
 	if quantity <= 0:
 		return false
 	
-	var item=resources_dict[itemName]
-	var price_per_item = item.get_price(season, events)
+	var item : ResourceData=resources_dict[itemName]
+	var price_per_item = item.get_price(season, eventNames)
 	var total_cost = price_per_item * quantity
 
 	if _spend_money(total_cost):
@@ -79,7 +77,7 @@ func try_to_buy(itemName: String, quantity: int, season: String = "", events: Ar
 		return false
 		
 	
-func try_to_sell(itemName: String, quantity: int, season: String = "", events: Array[String] = []) -> bool:
+func try_to_sell(itemName: String, quantity: int, season: String = "") -> bool:
 	if quantity <= 0:
 		return false
 		
@@ -89,7 +87,7 @@ func try_to_sell(itemName: String, quantity: int, season: String = "", events: A
 		print("Not enough %s to sell! Have %d, need %d" % [item.category, current_count, quantity])
 		return false
 
-	var price_per_item = item.get_price(season, events)
+	var price_per_item = item.get_price(season, eventNames)
 	var total_gain = price_per_item * quantity
 
 	stock[itemName] = current_count - quantity
@@ -98,6 +96,9 @@ func try_to_sell(itemName: String, quantity: int, season: String = "", events: A
 	print("Sold %d x %s for %.2f, remaining %d" % [quantity, item.category, total_gain, stock[itemName]])
 	_updateUI()
 	return true
+
+func get_price(res:ResourceData,season:String) -> int:
+		return res.get_price(season,eventNames)
 
 #region --------------- UI ---------------------------
 @export var stockUI: PackedScene

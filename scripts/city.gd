@@ -35,6 +35,8 @@ func _ready() -> void:
 func _input_event(_viewport, event, _shape_idx) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		emit_signal("city_clicked", city_name)
+		print("city_clicked", city_name)
+		
 
 func set_season_visual(season: String, resources: Array[String] = []) -> void:
 	current_season = season

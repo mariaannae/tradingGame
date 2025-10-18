@@ -1,0 +1,138 @@
+[gd_scene load_steps=9 format=3 uid="uid://c5ouyy55xd8a4"]
+
+[ext_resource type="Script" uid="uid://58hspysnpalq" path="res://scripts/buyPage.gd" id="1_g5avq"]
+[ext_resource type="Texture2D" uid="uid://dw2ksgj3y8ngd" path="res://art/parchment.png" id="1_phw5v"]
+[ext_resource type="Script" uid="uid://cn1u4qb4srfwg" path="res://scripts/parchment_background.gd" id="2_g5avq"]
+[ext_resource type="Texture2D" uid="uid://dybpabgccjg76" path="res://art/resources/strawberry.png" id="4_brf3o"]
+[ext_resource type="Texture2D" uid="uid://bhyndc8qgolq" path="res://art/add.png" id="5_jor5y"]
+[ext_resource type="Texture2D" uid="uid://ir14p7jn27q6" path="res://art/Close.png" id="5_uvivu"]
+[ext_resource type="Texture2D" uid="uid://egovts5qx2ff" path="res://art/subtract.png" id="6_0jqui"]
+[ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="7_uvivu"]
+
+[node name="BuyPage" type="Control" node_paths=PackedStringArray("grid", "buyPriceLabel", "currentResTex", "buyCount", "buyButton")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_g5avq")
+grid = NodePath("bg/GridContainer")
+buyPriceLabel = NodePath("bg/BuyPirce")
+currentResTex = NodePath("bg/CurrentRes")
+buyCount = NodePath("bg/BuyCount")
+buyButton = NodePath("bg/BuyButton")
+
+[node name="bg" type="TextureRect" parent="."]
+self_modulate = Color(0.7294118, 0.6313726, 0.46666667, 1)
+layout_mode = 0
+offset_left = -1.0
+offset_right = 563.0
+offset_bottom = 648.0
+texture = ExtResource("1_phw5v")
+expand_mode = 1
+script = ExtResource("2_g5avq")
+padding = 30.0
+
+[node name="CloseButton" type="Button" parent="bg"]
+layout_mode = 0
+offset_left = 501.0
+offset_top = 20.0
+offset_right = 544.0
+offset_bottom = 62.0
+theme_override_styles/normal = ExtResource("7_uvivu")
+
+[node name="TextureRect" type="TextureRect" parent="bg/CloseButton"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 37.0
+offset_bottom = 36.0
+mouse_filter = 2
+texture = ExtResource("5_uvivu")
+expand_mode = 1
+
+[node name="GridContainer" type="GridContainer" parent="bg"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 47.0
+offset_right = 529.0
+offset_bottom = 300.0
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="CurrentRes" type="TextureRect" parent="bg"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 524.0
+offset_right = 142.0
+offset_bottom = 604.0
+texture = ExtResource("4_brf3o")
+
+[node name="AddButton" type="Button" parent="bg"]
+layout_mode = 0
+offset_left = 277.0
+offset_top = 548.0
+offset_right = 320.0
+offset_bottom = 590.0
+theme_override_styles/normal = ExtResource("7_uvivu")
+
+[node name="TextureRect" type="TextureRect" parent="bg/AddButton"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 37.0
+offset_bottom = 36.0
+mouse_filter = 2
+texture = ExtResource("5_jor5y")
+expand_mode = 1
+
+[node name="SubtractButton" type="Button" parent="bg"]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 549.0
+offset_right = 217.0
+offset_bottom = 590.0
+theme_override_styles/normal = ExtResource("7_uvivu")
+
+[node name="TextureRect" type="TextureRect" parent="bg/SubtractButton"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 36.0
+offset_bottom = 37.0
+mouse_filter = 2
+texture = ExtResource("6_0jqui")
+expand_mode = 1
+
+[node name="BuyCount" type="Label" parent="bg"]
+layout_mode = 0
+offset_left = 223.0
+offset_top = 553.0
+offset_right = 271.0
+offset_bottom = 589.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BuyPirce" type="Label" parent="bg"]
+layout_mode = 0
+offset_left = 358.0
+offset_top = 549.0
+offset_right = 420.6087
+offset_bottom = 585.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "$0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BuyButton" type="Button" parent="bg"]
+layout_mode = 0
+offset_left = 431.0
+offset_top = 547.0
+offset_right = 522.0
+offset_bottom = 590.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = ExtResource("7_uvivu")
+text = "Buy"
