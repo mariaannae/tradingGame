@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4bslqs40km5x"]
+
+[ext_resource type="Texture2D" uid="uid://cd3kdwp61t0ue" path="res://art/resources/beans.png" id="1_8jas3"]
+
+[sub_resource type="Theme" id="Theme_7l81t"]
+
+[node name="StockUi" type="Control"]
+layout_mode = 3
+anchor_right = 0.030000001
+anchor_bottom = 0.038000003
+offset_right = 66.44
+offset_bottom = 9.375998
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_8jas3")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 44.0
+offset_right = 76.0
+offset_bottom = 32.0
+theme = SubResource("Theme_7l81t")
+theme_override_font_sizes/font_size = 22
+text = "0"
