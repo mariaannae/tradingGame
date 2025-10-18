@@ -35,21 +35,21 @@ func load_from_dict(data: Dictionary) -> void:
 		event_modifiers = data["event_modifiers"]
 	current_price = base_price
 
-func get_price(season: String = "", events: Array[String] = []) -> float:
+func get_price(season: String = "", active_events: Array[String] = []) -> float:
 	var price = base_price
-
-	# Seasonal modifier
-	if season != "" and season in favored_season:
-		price *= 1.1  # 10% bonus if in favored season
-
+	
+	# Apply seasonal surcharge
+	if season in favored_season:
+		price *= 0.9
+	elif season != "":
+		price *= 1.1
+	
 	# Apply event modifiers
-	for event_name in events:
-		if event_name in event_modifiers:
-			price *= event_modifiers[event_name]
-
-	# Round to 2 decimal places (manual way)
-	price = round(price * 100.0) / 100.0
-	return price
+	for ev in active_events:
+		if event_modifiers.has(ev):
+			price *= event_modifiers[ev]
+	
+	return round(price)
 
 func is_local_to(biome: String) -> bool:
 	return biome in local_biomes

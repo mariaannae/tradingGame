@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bp408kebckug"]
+[gd_scene load_steps=14 format=3 uid="uid://bp408kebckug"]
 
 [ext_resource type="Texture2D" uid="uid://o4fb4xays43t" path="res://icon.svg" id="1_0wcw4"]
 [ext_resource type="Script" uid="uid://bgcrj76vkkg6s" path="res://scripts/turns_and_seasons.gd" id="1_5m4q6"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" uid="uid://cn1u4qb4srfwg" path="res://scripts/parchment_background.gd" id="5_parchment"]
 [ext_resource type="Script" uid="uid://uyrt6sms65sr" path="res://scripts/EconomyManager.gd" id="9_raa3b"]
 [ext_resource type="PackedScene" uid="uid://d4bslqs40km5x" path="res://scenes/StockUI.tscn" id="10_u73mt"]
+[ext_resource type="PackedScene" uid="uid://dbum560abgpsd" path="res://scenes/player.tscn" id="11_f0c3g"]
+[ext_resource type="Script" uid="uid://fmmff4hjpyih" path="res://scripts/random_event_manager.gd" id="11_od1u7"]
+[ext_resource type="Script" uid="uid://b5jc87om2rw51" path="res://scripts/event_popup.gd" id="13_l1wjf"]
 
 [node name="MapScene" type="Node2D"]
 script = ExtResource("1_5m4q6")
@@ -51,6 +54,42 @@ biome = "warm"
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 10
+
+[node name="EventPopup" type="Control" parent="UI" node_paths=PackedStringArray("title_label", "desc_label", "close_button")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("13_l1wjf")
+title_label = NodePath("UIStack/Title")
+desc_label = NodePath("UIStack/Description")
+close_button = NodePath("UIStack/CloseButton")
+
+[node name="UIStack" type="VBoxContainer" parent="UI/EventPopup"]
+layout_mode = 0
+offset_left = 435.0
+offset_top = 269.0
+offset_right = 501.0
+offset_bottom = 362.0
+alignment = 1
+
+[node name="Title" type="Label" parent="UI/EventPopup/UIStack"]
+layout_mode = 2
+
+[node name="Description" type="Label" parent="UI/EventPopup/UIStack"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="UI/EventPopup/UIStack"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = ExtResource("5_jlqwp")
+text = "Close"
+autowrap_trim_flags = 192
+icon_alignment = 1
 
 [node name="StockControl" type="Control" parent="UI"]
 layout_mode = 3
@@ -154,9 +193,17 @@ stretch_mode = 5
 script = ExtResource("5_parchment")
 padding = 30.0
 
-[node name="EconomyManager" type="Node" parent="." node_paths=PackedStringArray("UIGrid", "money_contorl")]
+[node name="EconomyManager" type="Node" parent="." node_paths=PackedStringArray("UIGrid", "end_turn_button", "money_contorl")]
 script = ExtResource("9_raa3b")
 MapScenePath = NodePath("..")
 stockUI = ExtResource("10_u73mt")
 UIGrid = NodePath("../UI/StockControl/StockUIGrid")
+end_turn_button = NodePath("../UI/Control/UIStack/EndTurnButton")
 money_contorl = NodePath("../UI/MoneyControl")
+
+[node name="RandomEventManager" type="Node" parent="EconomyManager"]
+script = ExtResource("11_od1u7")
+
+[node name="Player" parent="." instance=ExtResource("11_f0c3g")]
+
+[connection signal="pressed" from="UI/EventPopup/UIStack/CloseButton" to="UI/EventPopup" method="_on_close_button_pressed"]

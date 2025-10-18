@@ -4,11 +4,22 @@ extends Node
 @export var MapScenePath: NodePath
 var current_money: int = 0
 var stock: Dictionary = {}
-var res_Dic: Dictionary = {}
+#var res_Dic: Dictionary = {}
+var resources_dict := {}
+
+@onready var event_manager = $RandomEventManager
+@onready var event_popup = $"../UI/EventPopup"
+var current_event = {}
 
 func _ready() -> void:
 	initialize()
 	
+		# Connect End Turn button
+	if end_turn_button:
+		end_turn_button.pressed.connect(self.end_turn)
+	
+	print("All events:", event_manager.all_events)
+
 func _add_money(amount: int) -> void:
 	current_money += amount
 
@@ -25,6 +36,20 @@ func initialize()-> void:
 	#res_Dic = ResourceData.load_resources_from_json("res://data/resource.json")
 	await get_tree().process_frame
 	_initUI()
+	
+	# Initialize event manager with loaded resources
+	if event_manager:
+		event_manager.initialize(resources_dict)
+		event_manager.connect("event_triggered", _on_event_triggered)
+	else:
+		push_warning("RandomEventManager not found")
+		
+
+	if event_popup:
+		event_popup.connect("popup_closed", _on_event_popup_closed)
+	else:
+		push_warning("EventPopup not found")
+		
 	print("EconomySystem ready. Current money =", current_money)
 	
 	#TODO: test
@@ -73,12 +98,13 @@ func try_to_sell(itemName: String, quantity: int, season: String = "", events: A
 	print("Sold %d x %s for %.2f, remaining %d" % [quantity, item.category, total_gain, stock[itemName]])
 	_updateUI()
 	return true
-	
+
 #region --------------- UI ---------------------------
 @export var stockUI: PackedScene
 @export var UIGrid: GridContainer
+@export var end_turn_button: Button
+
 var resourceUIs := {}
-var resources_dict := {}
 func _initUI() -> void:
 	var map_scene = get_node(MapScenePath)
 	
@@ -117,4 +143,20 @@ func _updateUI() -> void:
 				label_node.text = str(stock.get(name,0))
 	var money_label_node = money_contorl.find_child("Label")
 	money_label_node.text=" Money: " + str(current_money)
+	
+func end_turn() -> void:
+	if event_manager:
+		event_manager.trigger_random_event()
+	else:
+		print("No event manager found!")
+
+func _on_event_triggered(event_data: Dictionary) -> void:
+	current_event = event_data
+	if event_popup:
+		event_popup.show_event(event_data)
+	else:
+		print("No event popup to show event")
+
+func _on_event_popup_closed() -> void:
+	print("Event popup closed, next turn can start")
 #endregion
