@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5ouyy55xd8a4"]
+[gd_scene load_steps=8 format=3 uid="uid://c5ouyy55xd8a4"]
 
-[ext_resource type="Script" uid="uid://58hspysnpalq" path="res://scripts/buyPage.gd" id="1_g5avq"]
-[ext_resource type="Texture2D" uid="uid://dw2ksgj3y8ngd" path="res://art/parchment.png" id="1_phw5v"]
-[ext_resource type="Script" uid="uid://cn1u4qb4srfwg" path="res://scripts/parchment_background.gd" id="2_g5avq"]
+[ext_resource type="Script" path="res://scripts/buyPage.gd" id="1_g5avq"]
+[ext_resource type="Texture2D" uid="uid://df6s70kjyunsl" path="res://art/buypage_parchment.png" id="1_phw5v"]
 [ext_resource type="Texture2D" uid="uid://dybpabgccjg76" path="res://art/resources/strawberry.png" id="4_brf3o"]
 [ext_resource type="Texture2D" uid="uid://bhyndc8qgolq" path="res://art/add.png" id="5_jor5y"]
 [ext_resource type="Texture2D" uid="uid://ir14p7jn27q6" path="res://art/Close.png" id="5_uvivu"]
@@ -21,15 +20,12 @@ buyButton = NodePath("bg/BuyButton")
 sellButton = NodePath("bg/SellButton")
 
 [node name="bg" type="TextureRect" parent="."]
-self_modulate = Color(0.7294118, 0.6313726, 0.46666667, 1)
 layout_mode = 0
 offset_left = -1.0
 offset_right = 563.0
 offset_bottom = 648.0
 texture = ExtResource("1_phw5v")
 expand_mode = 1
-script = ExtResource("2_g5avq")
-padding = 30.0
 
 [node name="CloseButton" type="Button" parent="bg"]
 layout_mode = 0
