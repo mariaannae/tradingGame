@@ -1,8 +1,7 @@
-
 extends Area2D
 
 @export var city_name: String = ""
-@export var icon_texture: Texture2D
+@export var icon_sprite_frames: SpriteFrames   # now supports animated icons
 @export_enum("cold", "steppe", "coastal", "warm") var biome: String = "cold"
 
 signal city_clicked(id: String)
@@ -13,8 +12,11 @@ var available_resources: Array[String] = []
 
 func _ready() -> void:
 	input_pickable = true
-	if icon_texture:
-		$"Icon".texture = icon_texture
+	# assign animated sprite frames if available
+	if icon_sprite_frames:
+		$"Icon".sprite_frames = icon_sprite_frames
+		$"Icon".play("default")  # plays the default animation
+	
 	if city_name != "":
 		$"Name".text = city_name
 	$"Name".position.y = 18  # nudge label below the icon

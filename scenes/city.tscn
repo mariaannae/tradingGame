@@ -1,17 +1,19 @@
 [gd_scene load_steps=4 format=3 uid="uid://dutxtsat7w2un"]
 
 [ext_resource type="Script" uid="uid://c0wfujalfqbwd" path="res://scripts/city.gd" id="1_58ubr"]
-[ext_resource type="Texture2D" uid="uid://o4fb4xays43t" path="res://icon.svg" id="1_bih7l"]
+[ext_resource type="SpriteFrames" uid="uid://citbltis0m2po" path="res://art/city.tres" id="2_58ubr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hpa3k"]
 radius = 12.0
 
 [node name="City" type="Area2D"]
 script = ExtResource("1_58ubr")
+icon_sprite_frames = ExtResource("2_58ubr")
 
-[node name="Icon" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("1_bih7l")
+[node name="Icon" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.1429046, 1.1429046)
+sprite_frames = ExtResource("2_58ubr")
+frame_progress = 0.08586491
 
 [node name="Name" type="Label" parent="."]
 offset_right = 40.0
@@ -23,4 +25,5 @@ offset_bottom = 23.0
 horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3.1600003, 3.1600003)
 shape = SubResource("CircleShape2D_hpa3k")
