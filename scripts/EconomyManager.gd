@@ -1,7 +1,10 @@
 extends Node
 class_name EconomyManager
 
+signal event_handling_complete
+
 @export var start_money: int = 1000
+@export var event_probability: float = 1.0  # 0.0 to 1.0, where 1.0 = 100% chance
 @export var MapScenePath: NodePath
 var current_money: int = 0
 var stock: Dictionary = {}
@@ -17,18 +20,16 @@ func _ready() -> void:
 	initialize()
 	eventNames = []  # initialize to an empty list
 	
-		# Connect End Turn button
-	if end_turn_button:
-		end_turn_button.pressed.connect(self.end_turn)
-	
 	print("All events:", event_manager.all_events)
 
 func _add_money(amount: int) -> void:
 	current_money += amount
+	_updateUI()
 
 func _spend_money(amount: int) -> bool:
 	if current_money >= amount:
 		current_money -= amount
+		_updateUI()
 		return true
 	else:
 		print("Not enough money!")
@@ -132,7 +133,9 @@ func _initUI() -> void:
 				icon_node.texture = resource.texture
 			else:
 				push_warning("Icon node not found or not TextureRect")
-			UIGrid.add_child(ui_instance)            
+			UIGrid.add_child(ui_instance)
+			# Set the resource name for tooltip (using the dictionary key)
+			ui_instance.set_resource_name(name)
 			resourceUIs[name] = ui_instance
 		else:
 			push_error("stockUI PackedScene not assigned!")
@@ -147,10 +150,16 @@ func _updateUI() -> void:
 	money_label_node.text=" Money: " + str(current_money)
 	
 func end_turn() -> void:
-	if event_manager:
+	# Check if event should occur based on probability
+	var roll = randf()  # Returns value between 0.0 and 1.0
+	
+	if roll < event_probability and event_manager:
+		# Trigger event - the popup will show and signal will emit when closed
 		event_manager.trigger_random_event()
 	else:
-		print("No event manager found!")
+		# No event occurs, emit signal immediately to proceed
+		print("No event triggered this turn")
+		event_handling_complete.emit()
 
 func _on_event_triggered(event_data: Dictionary) -> void:
 	current_event = event_data
@@ -164,8 +173,11 @@ func _on_event_triggered(event_data: Dictionary) -> void:
 		event_popup.show_event(event_data)
 	else:
 		print("No event popup to show event")
+		# If popup fails to show, still emit signal to continue
+		event_handling_complete.emit()
 
 func _on_event_popup_closed() -> void:
 	print("Event popup closed, next turn can start")
+	event_handling_complete.emit()
 	
 #endregion

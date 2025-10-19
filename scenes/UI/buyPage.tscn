@@ -29,9 +29,9 @@ expand_mode = 1
 
 [node name="CloseButton" type="Button" parent="bg"]
 layout_mode = 0
-offset_left = 501.0
+offset_left = 471.0
 offset_top = 20.0
-offset_right = 544.0
+offset_right = 514.0
 offset_bottom = 62.0
 theme_override_styles/normal = ExtResource("7_uvivu")
 
@@ -50,10 +50,10 @@ expand_mode = 1
 layout_mode = 0
 offset_left = 52.0
 offset_top = 47.0
-offset_right = 529.0
+offset_right = 465.0
 offset_bottom = 300.0
-theme_override_constants/h_separation = 100
-theme_override_constants/v_separation = 10
+theme_override_constants/h_separation = 35
+theme_override_constants/v_separation = 15
 columns = 2
 
 [node name="CurrentRes" type="TextureRect" parent="bg"]

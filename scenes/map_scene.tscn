@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bp408kebckug"]
+[gd_scene load_steps=16 format=3 uid="uid://bp408kebckug"]
 
 [ext_resource type="Script" uid="uid://bgcrj76vkkg6s" path="res://scripts/turns_and_seasons.gd" id="1_5m4q6"]
 [ext_resource type="PackedScene" uid="uid://dutxtsat7w2un" path="res://scenes/city.tscn" id="2_ne7uw"]
@@ -12,7 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://dbum560abgpsd" path="res://scenes/player.tscn" id="11_f0c3g"]
 [ext_resource type="Script" uid="uid://fmmff4hjpyih" path="res://scripts/random_event_manager.gd" id="11_od1u7"]
 [ext_resource type="PackedScene" uid="uid://shs7tm7tjuxb" path="res://scenes/UI/resourceButton.tscn" id="11_xb8oc"]
+[ext_resource type="PackedScene" uid="uid://btravelui001" path="res://scenes/UI/TravelUI.tscn" id="12_travel"]
 [ext_resource type="Script" uid="uid://b5jc87om2rw51" path="res://scripts/event_popup.gd" id="13_l1wjf"]
+[ext_resource type="PackedScene" uid="uid://dr85sm1k03o1u" path="res://scenes/UI/CityWelcomePopup.tscn" id="14_welcome"]
 
 [node name="MapScene" type="Node2D"]
 script = ExtResource("1_5m4q6")
@@ -54,20 +56,28 @@ biome = "warm"
 layer = 10
 
 [node name="EventPopup" type="Control" parent="UI"]
+z_index = 100
 layout_mode = 3
-anchors_preset = 0
-offset_left = -99.0
-offset_top = -8.0
-offset_right = -59.0
-offset_bottom = 32.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("13_l1wjf")
 
 [node name="UIStack" type="VBoxContainer" parent="UI/EventPopup"]
-layout_mode = 0
-offset_left = 526.0
-offset_top = 289.0
-offset_right = 592.0
-offset_bottom = 382.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
 alignment = 1
 
 [node name="Title" type="Label" parent="UI/EventPopup/UIStack"]
@@ -96,24 +106,32 @@ anchor_right = 1.0
 grow_horizontal = 0
 
 [node name="ParchmentBackground" type="TextureRect" parent="UI/StockControl"]
-layout_mode = 0
-offset_left = -451.0
-offset_top = -22.0
-offset_right = 38.0
-offset_bottom = 237.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -620.0
+offset_top = -120.0
+offset_right = 120.0
+offset_bottom = 205.0
+grow_horizontal = 0
 texture = ExtResource("4_parchment")
-expand_mode = 0
 
 [node name="StockUIGrid" type="GridContainer" parent="UI/StockControl"]
-layout_mode = 0
-offset_left = -400.0
-offset_top = 13.0
-offset_bottom = 345.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -570.0
+offset_top = 20.0
+offset_right = 90.0
+offset_bottom = 332.0
+grow_horizontal = 0
 pivot_offset = Vector2(400, 1)
 mouse_filter = 2
 theme_override_constants/h_separation = 80
 theme_override_constants/v_separation = 40
-columns = 5
+columns = 7
 
 [node name="MoneyControl" type="Control" parent="UI"]
 layout_mode = 3
@@ -121,17 +139,16 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = 371.0
-offset_top = 186.0
+offset_top = 140.0
 offset_right = 371.0
-offset_bottom = 186.0
+offset_bottom = 140.0
 grow_horizontal = 0
 
 [node name="Label" type="Label" parent="UI/MoneyControl"]
 layout_mode = 0
-offset_left = -534.99994
-offset_top = -13.0
-offset_right = -477.99994
-offset_bottom = 10.0
+offset_left = -575.0
+offset_right = -477.0
+offset_bottom = 23.0
 scale = Vector2(1.3785383, 1.3785383)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Money: 1000"
@@ -141,21 +158,40 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = 89.0
-offset_right = -10.0
-offset_bottom = 89.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="UIStack" type="VBoxContainer" parent="UI/Control"]
+[node name="ParchmentBackground" type="TextureRect" parent="UI/Control"]
 layout_mode = 1
-anchors_preset = -1
-offset_left = 1038.0
-offset_top = 125.0
-offset_right = 1151.0
-offset_bottom = 191.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -162.0
+offset_top = -118.0
+offset_right = 377.0
+offset_bottom = 150.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("4_parchment")
+flip_v = true
+
+[node name="UIStack" type="VBoxContainer" parent="UI/Control"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -130.0
+offset_top = -70.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="EndTurnButton" type="Button" parent="UI/Control/UIStack"]
 layout_mode = 2
@@ -176,22 +212,16 @@ text = "Turn: 0/3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ParchmentBackground" type="TextureRect" parent="UI/Control"]
-visible = false
-modulate = Color(0.729, 0.631, 0.467, 1)
-layout_mode = 0
-offset_left = -18.0
-offset_right = 137.0
-offset_bottom = 100.0
-texture = ExtResource("4_parchment")
-expand_mode = 1
-stretch_mode = 5
+[node name="TravelUI" parent="UI" instance=ExtResource("12_travel")]
 
-[node name="BuyPage" parent="UI" node_paths=PackedStringArray("economyManager", "turns", "cityNodes") instance=ExtResource("10_tk4s2")]
+[node name="CityWelcomePopup" parent="UI" instance=ExtResource("14_welcome")]
+
+[node name="BuyPage" parent="UI" node_paths=PackedStringArray("economyManager", "turns", "cityNodes", "welcomePopup") instance=ExtResource("10_tk4s2")]
 resourceButton = ExtResource("11_xb8oc")
 economyManager = NodePath("../../EconomyManager")
 turns = NodePath("../..")
 cityNodes = NodePath("../../Cities")
+welcomePopup = NodePath("../CityWelcomePopup")
 
 [node name="EconomyManager" type="Node" parent="." node_paths=PackedStringArray("UIGrid", "end_turn_button", "money_contorl")]
 script = ExtResource("9_raa3b")

@@ -18,14 +18,36 @@ var city_effective := {}         # id -> Dictionary
 
 var turn_idx := 0
 
+# References to other nodes
+var player_node: Node2D = null
+var travel_ui: Control = null
+var buy_page: Node = null
+var economy_manager: Node = null
+
 func _ready() -> void:
 	_load_resources()
 	_load_biome_sequences()
 	_register_cities()
 	_build_schedules_for_all()
 	_apply_current_seasons(true)
+	
+	# Get references to other nodes
+	player_node = $"Player"
+	travel_ui = $"UI/TravelUI"
+	buy_page = $"UI/BuyPage"
+	economy_manager = $"EconomyManager"
+	
 	# Hook up the End Turn button
 	$"UI/Control/UIStack/EndTurnButton".pressed.connect(_on_end_turn_pressed)
+	
+	# Hook up travel UI signal
+	if travel_ui:
+		travel_ui.travel_confirmed.connect(_on_travel_confirmed)
+	
+	# Hook up economy manager event completion signal
+	if economy_manager:
+		economy_manager.event_handling_complete.connect(_on_event_handling_complete)
+	
 	_update_turn_label()
 
 
@@ -56,6 +78,62 @@ func _register_cities() -> void:
 	print("Total cities registered: %d" % cities.size())
 
 func _on_end_turn_pressed() -> void:
+	# Close buy page if it's open
+	if buy_page and buy_page.has_method("set_ui_active"):
+		buy_page.set_ui_active(buy_page.find_child("bg"), false)
+	
+	# Show travel UI first (event popup will come after travel confirmation)
+	if travel_ui and player_node and economy_manager:
+		travel_ui.show_travel_options(player_node, economy_manager)
+	else:
+		push_error("Missing references for travel UI")
+		# Fallback: advance turn without travel
+		_advance_turn()
+
+func _on_event_handling_complete() -> void:
+	"""Called after event popup closes (or immediately if no event occurred)"""
+	# Now advance the turn and open buy page
+	_advance_turn()
+	
+	# Open buy page for the current city automatically
+	if buy_page and buy_page.has_method("_on_city_clicked"):
+		# Wait one frame to ensure everything is updated
+		await get_tree().process_frame
+		buy_page._on_city_clicked(player_node.current_city_name)
+
+func _on_travel_confirmed(city_name: String, cost: int) -> void:
+	"""Handle travel confirmation from UI"""
+	print("Travel confirmed: %s, Cost: %d" % [city_name, cost])
+	
+	# Deduct travel cost
+	if cost > 0:
+		if economy_manager.get_money() >= cost:
+			economy_manager._spend_money(cost)
+			print("Paid %d for travel" % cost)
+		else:
+			push_error("Not enough money for travel! This shouldn't happen.")
+			return
+	
+	# Move player to selected city
+	if city_name != player_node.current_city_name:
+		player_node.travel_to_city(city_name)
+	
+	# Now check for events (event popup will show if event occurs)
+	# The event popup will show, then advance turn after it closes
+	if economy_manager:
+		economy_manager.end_turn()
+	else:
+		push_error("Missing economy manager reference")
+		# Fallback: advance turn without event check
+		_advance_turn()
+		
+		# Open buy page for the current city automatically
+		if buy_page and buy_page.has_method("_on_city_clicked"):
+			await get_tree().process_frame
+			buy_page._on_city_clicked(player_node.current_city_name)
+
+func _advance_turn() -> void:
+	"""Advance to the next turn"""
 	turn_idx += 1
 	_apply_current_seasons(false)
 	turn_advanced.emit(turn_idx)

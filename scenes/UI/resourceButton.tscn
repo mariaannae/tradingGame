@@ -8,10 +8,10 @@
 [sub_resource type="Theme" id="Theme_4o7rm"]
 
 [node name="ResourceButton" type="Control"]
+custom_minimum_size = Vector2(165, 96)
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0

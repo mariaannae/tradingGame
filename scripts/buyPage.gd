@@ -6,10 +6,25 @@ extends Node
 @export var turns : Node
 @export var cityNodes : Node
 @export var eventManager: Node
+@export var welcomePopup: Control
 var currentCity 
+var player_node: Node2D = null
+var has_shown_welcome: bool = false
 
 func _ready() -> void:
 	await get_tree().process_frame
+	
+	# Get player reference
+	player_node = get_node("../../Player")
+	
+	# Connect to player's game_started signal
+	if player_node:
+		player_node.game_started.connect(_on_game_started)
+	
+	# Connect welcome popup
+	if welcomePopup:
+		welcomePopup.ok_pressed.connect(_on_welcome_ok_pressed)
+	
 	for city in cityNodes.get_children():
 		city.city_clicked.connect(_on_city_clicked)
 	set_ui_active(find_child("bg"),false)
@@ -20,11 +35,38 @@ func _ready() -> void:
 	buyButton.pressed.connect(on_buy_clicked)
 	sellButton.pressed.connect(on_sell_clicked)
 
+func _on_game_started(city_name: String) -> void:
+	"""Handle the initial game start - show welcome popup"""
+	if welcomePopup and not has_shown_welcome:
+		welcomePopup.show_welcome(city_name)
+		has_shown_welcome = true
+
+func _on_welcome_ok_pressed() -> void:
+	"""When welcome popup OK is clicked, open the buyPage for current city"""
+	if player_node:
+		_open_buypage_for_city(player_node.current_city_name)
+
 func _on_city_clicked(city_name: String) -> void:
+	# Check if player is in this city
+	if player_node and player_node.current_city_name != city_name:
+		print("Cannot trade in %s - you are currently in %s" % [city_name, player_node.current_city_name])
+		_show_wrong_city_message(city_name)
+		return
+	
+	_open_buypage_for_city(city_name)
+
+func _open_buypage_for_city(city_name: String) -> void:
+	"""Open the buy page for the specified city"""
 	currentCity = cityNodes.find_child(city_name)
 	set_ui_active(find_child("bg"),true)
 	initialize()
-	print("Clicked city:", city_name)
+	print("Opened buypage for city:", city_name)
+
+func _show_wrong_city_message(city_name: String) -> void:
+	"""Show a message that player needs to travel to this city first"""
+	# For now, just print to console
+	# TODO: Could add a popup message here if desired
+	print("Travel to %s first to trade there!" % city_name)
 
 
 func initialize() -> void:
