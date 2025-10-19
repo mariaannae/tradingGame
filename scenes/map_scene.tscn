@@ -55,19 +55,20 @@ biome = "warm"
 layer = 10
 
 [node name="EventPopup" type="Control" parent="UI"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -99.0
+offset_top = -8.0
+offset_right = -59.0
+offset_bottom = 32.0
 script = ExtResource("13_l1wjf")
 
 [node name="UIStack" type="VBoxContainer" parent="UI/EventPopup"]
 layout_mode = 0
-offset_left = 435.0
-offset_top = 269.0
-offset_right = 501.0
-offset_bottom = 362.0
+offset_left = 526.0
+offset_top = 289.0
+offset_right = 592.0
+offset_bottom = 382.0
 alignment = 1
 
 [node name="Title" type="Label" parent="UI/EventPopup/UIStack"]

@@ -6,10 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://dybpabgccjg76" path="res://art/resources/strawberry.png" id="4_brf3o"]
 [ext_resource type="Texture2D" uid="uid://bhyndc8qgolq" path="res://art/add.png" id="5_jor5y"]
 [ext_resource type="Texture2D" uid="uid://ir14p7jn27q6" path="res://art/Close.png" id="5_uvivu"]
-[ext_resource type="Texture2D" uid="uid://egovts5qx2ff" path="res://art/subtract.png" id="6_0jqui"]
+[ext_resource type="Texture2D" uid="uid://x20yxluek5hq" path="res://art/subtract.png" id="6_0jqui"]
 [ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="7_uvivu"]
 
-[node name="BuyPage" type="Control" node_paths=PackedStringArray("grid", "buyPriceLabel", "currentResTex", "buyCount", "buyButton")]
+[node name="BuyPage" type="Control" node_paths=PackedStringArray("grid", "buyPriceLabel", "currentResTex", "buyCount", "buyButton", "sellButton")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_g5avq")
@@ -18,6 +18,7 @@ buyPriceLabel = NodePath("bg/BuyPirce")
 currentResTex = NodePath("bg/CurrentRes")
 buyCount = NodePath("bg/BuyCount")
 buyButton = NodePath("bg/BuyButton")
+sellButton = NodePath("bg/SellButton")
 
 [node name="bg" type="TextureRect" parent="."]
 self_modulate = Color(0.7294118, 0.6313726, 0.46666667, 1)
@@ -129,10 +130,20 @@ vertical_alignment = 1
 
 [node name="BuyButton" type="Button" parent="bg"]
 layout_mode = 0
+offset_left = 430.0
+offset_top = 496.0
+offset_right = 521.0
+offset_bottom = 539.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = ExtResource("7_uvivu")
+text = "Buy"
+
+[node name="SellButton" type="Button" parent="bg"]
+layout_mode = 0
 offset_left = 431.0
 offset_top = 547.0
 offset_right = 522.0
 offset_bottom = 590.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = ExtResource("7_uvivu")
-text = "Buy"
+text = "Sell"

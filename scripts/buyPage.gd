@@ -18,6 +18,7 @@ func _ready() -> void:
 	find_child("CloseButton").pressed.connect(set_ui_active.bind(find_child("bg"),false))
 	
 	buyButton.pressed.connect(on_buy_clicked)
+	sellButton.pressed.connect(on_sell_clicked)
 
 func _on_city_clicked(city_name: String) -> void:
 	currentCity = cityNodes.find_child(city_name)
@@ -81,6 +82,24 @@ func on_buy_clicked()-> bool:
 		return true
 	return false
 
+func on_sell_clicked() -> bool:
+	if currentCount <= 0:
+		return false
+	
+	var name: String
+	for key in economyManager.resources_dict.keys():
+		if economyManager.resources_dict[key] == currentRes:
+			name = key
+			break
+	
+	if economyManager.try_to_sell(name, currentCount, currentCity.current_season):
+		# Reset count and total
+		currentCount = 0
+		totalPrice = 0
+		_updateUI()
+		return true
+	return false
+
 func on_res_clicked(name:String)-> void:
 
 	currentRes = economyManager.resources_dict[name]
@@ -96,6 +115,8 @@ func _getPrice (data:ResourceData )->int:
 @export var currentResTex: TextureRect
 @export var buyCount : Label
 @export var buyButton : Button
+@export var sellButton: Button
+
 func _updateUI() -> void:
 	currentResTex.texture = currentRes.texture
 	buyCount.text = str(currentCount)
