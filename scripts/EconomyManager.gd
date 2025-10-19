@@ -15,6 +15,7 @@ var current_event = {}
 
 func _ready() -> void:
 	initialize()
+	eventNames = []  # initialize to an empty list
 	
 		# Connect End Turn button
 	if end_turn_button:
@@ -153,6 +154,13 @@ func end_turn() -> void:
 
 func _on_event_triggered(event_data: Dictionary) -> void:
 	current_event = event_data
+	
+		# Add this event to the active list (avoid duplicates)
+	if not eventNames.has(event_data["key"]):
+		eventNames.append(event_data["key"])
+	
+	print("Active events:", eventNames)
+
 	if event_popup:
 		event_popup.show_event(event_data)
 	else:
@@ -160,4 +168,5 @@ func _on_event_triggered(event_data: Dictionary) -> void:
 
 func _on_event_popup_closed() -> void:
 	print("Event popup closed, next turn can start")
+	
 #endregion

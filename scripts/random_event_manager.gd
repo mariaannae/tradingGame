@@ -1,16 +1,11 @@
 extends Node
-
 signal event_triggered(event_data: Dictionary)
 
 var all_events: Array = []
 var current_event: Dictionary = {}
 var resources_dict: Dictionary = {}
 
-func _ready():
-	print("RandomEventManager ready")
-
 func initialize(resource_dict: Dictionary):
-	# Called once after all resources are loaded (from Map or EconomyManager)
 	resources_dict = resource_dict
 	_collect_unique_events()
 

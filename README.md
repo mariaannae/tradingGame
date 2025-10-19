@@ -4,3 +4,4 @@ Asset Credits:
 	
 	https://itch.io/game-assets/tag-icons/tag-pixel
 	https://aamatniekss.itch.io/fantasy-paper-map-pixelart-asset-pack
+	https://ankousse26.itch.io/free-flag-with-animation

@@ -13,7 +13,7 @@ icon_sprite_frames = ExtResource("2_58ubr")
 [node name="Icon" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.1429046, 1.1429046)
 sprite_frames = ExtResource("2_58ubr")
-frame_progress = 0.08586491
+frame_progress = 0.5142828
 
 [node name="Name" type="Label" parent="."]
 offset_right = 40.0
@@ -25,5 +25,5 @@ offset_bottom = 23.0
 horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(3.1600003, 3.1600003)
+scale = Vector2(3.5624526, 3.2762382)
 shape = SubResource("CircleShape2D_hpa3k")

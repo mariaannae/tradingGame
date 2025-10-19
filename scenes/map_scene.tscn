@@ -1,9 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://bp408kebckug"]
+[gd_scene load_steps=15 format=3 uid="uid://bp408kebckug"]
 
-[ext_resource type="Texture2D" uid="uid://o4fb4xays43t" path="res://icon.svg" id="1_0wcw4"]
 [ext_resource type="Script" uid="uid://bgcrj76vkkg6s" path="res://scripts/turns_and_seasons.gd" id="1_5m4q6"]
 [ext_resource type="PackedScene" uid="uid://dutxtsat7w2un" path="res://scenes/city.tscn" id="2_ne7uw"]
-[ext_resource type="Texture2D" uid="uid://cpqxdma1h3qcy" path="res://art/map-old.png" id="2_vsh3c"]
+[ext_resource type="Texture2D" uid="uid://blly5ov4ih8mm" path="res://art/map.png" id="2_vsh3c"]
 [ext_resource type="Script" uid="uid://dnpfvojfm741g" path="res://scripts/background_scaling.gd" id="3_jlqwp"]
 [ext_resource type="Texture2D" uid="uid://dw2ksgj3y8ngd" path="res://art/parchment.png" id="4_parchment"]
 [ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="5_jlqwp"]
@@ -20,7 +19,7 @@
 script = ExtResource("1_5m4q6")
 
 [node name="Background" type="Sprite2D" parent="."]
-scale = Vector2(0.30139536, 0.30139536)
+scale = Vector2(0.9, 0.9)
 texture = ExtResource("2_vsh3c")
 script = ExtResource("3_jlqwp")
 
@@ -29,7 +28,6 @@ script = ExtResource("3_jlqwp")
 [node name="Draugaholt" parent="Cities" instance=ExtResource("2_ne7uw")]
 position = Vector2(-327, -260)
 city_name = "Draugaholt"
-icon_texture = ExtResource("1_0wcw4")
 
 [node name="Yalanga" parent="Cities" instance=ExtResource("2_ne7uw")]
 position = Vector2(275, 123)
@@ -56,15 +54,13 @@ biome = "warm"
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 10
 
-[node name="EventPopup" type="Control" parent="UI" node_paths=PackedStringArray("title_label", "desc_label", "close_button")]
+[node name="EventPopup" type="Control" parent="UI"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("13_l1wjf")
-title_label = NodePath("UIStack/Title")
-desc_label = NodePath("UIStack/Description")
-close_button = NodePath("UIStack/CloseButton")
 
 [node name="UIStack" type="VBoxContainer" parent="UI/EventPopup"]
 layout_mode = 0
@@ -141,7 +137,7 @@ offset_right = -477.99994
 offset_bottom = 10.0
 scale = Vector2(1.3785383, 1.3785383)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Money:"
+text = "Money: 1000"
 
 [node name="Control" type="Control" parent="UI"]
 layout_mode = 3
@@ -159,9 +155,9 @@ mouse_filter = 2
 [node name="UIStack" type="VBoxContainer" parent="UI/Control"]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 1056.0
+offset_left = 1038.0
 offset_top = 125.0
-offset_right = 1150.0
+offset_right = 1151.0
 offset_bottom = 191.0
 
 [node name="EndTurnButton" type="Button" parent="UI/Control/UIStack"]
@@ -214,5 +210,3 @@ money_contorl = NodePath("../UI/MoneyControl")
 script = ExtResource("11_od1u7")
 
 [node name="Player" parent="." instance=ExtResource("11_f0c3g")]
-
-[connection signal="pressed" from="UI/EventPopup/UIStack/CloseButton" to="UI/EventPopup" method="_on_close_button_pressed"]
