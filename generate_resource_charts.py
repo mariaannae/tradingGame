@@ -48,6 +48,12 @@ def load_resources(filepath: str = 'data/resources.json') -> Dict:
         return json.load(f)
 
 
+def load_biome_seasons(filepath: str = 'data/biome_seasons.json') -> Dict:
+    """Load biome seasonal sequences from JSON file"""
+    with open(filepath, 'r') as f:
+        return json.load(f)
+
+
 def calculate_price(resource: Dict, season: str = '', events: List[str] = []) -> float:
     """Calculate resource price with season and event modifiers"""
     base_price = resource['base_price']
@@ -364,8 +370,8 @@ def chart_5_biome_seasonal_timeline(resources: Dict, output_dir: Path):
     print(f"✓ Saved: {output_dir / '5_biome_seasonal_timeline.png'}")
 
 
-def chart_6_city_seasonal_prices(resources: Dict, output_dir: Path):
-    """Generate seasonal price charts for each city"""
+def chart_6_city_seasonal_prices(resources: Dict, biome_seasons: Dict, output_dir: Path):
+    """Generate seasonal price charts for each city using biome-specific seasonal sequences"""
     print("Generating Chart 6: City-Specific Seasonal Price Charts...")
     
     # Define cities and their biomes (from map_scene.tscn)
@@ -384,6 +390,12 @@ def chart_6_city_seasonal_prices(resources: Dict, output_dir: Path):
     
     for city_name, biome in cities.items():
         print(f"  Generating chart for {city_name} ({biome})...")
+        
+        # Get the seasonal sequence for this biome
+        biome_data = biome_seasons.get(biome, {})
+        seasonal_sequence = biome_data.get('sequence', ['spring', 'summer', 'fall', 'winter'])
+        
+        print(f"    Using seasonal sequence: {seasonal_sequence}")
         
         # Find resources available in this city (those with this biome in local_biomes)
         available_resources = {}
@@ -407,32 +419,35 @@ def chart_6_city_seasonal_prices(resources: Dict, output_dir: Path):
             if not favored_seasons:
                 continue
             
-            # Create lists for seasons and prices (only for favored seasons)
-            plot_seasons = []
+            # Create lists for positions and prices (only for positions where season is favored)
+            plot_positions = []
             plot_prices = []
+            plot_labels = []
             
-            for season in SEASONS:
+            for pos, season in enumerate(seasonal_sequence):
                 if season in favored_seasons:
                     price = calculate_price(res_data, season, [])  # No events
-                    plot_seasons.append(season)
+                    plot_positions.append(pos)
                     plot_prices.append(price)
+                    plot_labels.append(season.title())
             
             # Only plot if we have data points
-            if plot_seasons:
-                ax.plot(plot_seasons, plot_prices, marker='o', linewidth=2.5,
+            if plot_positions:
+                ax.plot(plot_positions, plot_prices, marker='o', linewidth=2.5,
                        color=resource_colors[res_name], label=res_name.replace('-', ' ').title(),
                        markersize=8, alpha=0.8)
         
         # Styling
-        ax.set_xlabel('Season', fontsize=12, fontweight='bold')
+        ax.set_xlabel('Seasonal Position', fontsize=12, fontweight='bold')
         ax.set_ylabel('Price (Gold)', fontsize=12, fontweight='bold')
-        ax.set_title(f'{city_name} - Seasonal Resource Prices\n({biome.title()} Biome)',
+        ax.set_title(f'{city_name} - Seasonal Resource Prices\n({biome.title()} Biome: {", ".join([s.title() for s in seasonal_sequence])})',
                     fontsize=16, fontweight='bold', pad=20)
         ax.grid(True, alpha=0.3, linestyle='--')
         
-        # Format x-axis
-        ax.set_xticks(range(len(SEASONS)))
-        ax.set_xticklabels([s.title() for s in SEASONS])
+        # Format x-axis with biome-specific seasons
+        ax.set_xticks(range(len(seasonal_sequence)))
+        ax.set_xticklabels([f"{i+1}. {s.title()}" for i, s in enumerate(seasonal_sequence)], 
+                          fontsize=9)
         
         # Legend - place outside plot area if many resources
         num_resources = len(available_resources)
@@ -440,11 +455,6 @@ def chart_6_city_seasonal_prices(resources: Dict, output_dir: Path):
             ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9, ncol=2)
         else:
             ax.legend(loc='best', fontsize=10, ncol=1 if num_resources <= 8 else 2)
-        
-        # Add note about biome
-        ax.text(0.02, 0.98, f'{len(available_resources)} resources available',
-                transform=ax.transAxes, fontsize=9, style='italic', va='top',
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
         
         plt.tight_layout()
         
@@ -469,12 +479,23 @@ def main():
     # Load resources
     try:
         resources = load_resources()
-        print(f"Loaded {len(resources)} resources\n")
+        print(f"Loaded {len(resources)} resources")
     except FileNotFoundError:
         print("❌ Error: data/resources.json not found!")
         return
     except json.JSONDecodeError:
         print("❌ Error: Invalid JSON in resources.json!")
+        return
+    
+    # Load biome seasonal sequences
+    try:
+        biome_seasons = load_biome_seasons()
+        print(f"Loaded seasonal sequences for {len(biome_seasons)} biomes\n")
+    except FileNotFoundError:
+        print("❌ Error: data/biome_seasons.json not found!")
+        return
+    except json.JSONDecodeError:
+        print("❌ Error: Invalid JSON in biome_seasons.json!")
         return
     
     # Generate all charts
@@ -484,7 +505,7 @@ def main():
         chart_3_volatility_analysis(resources, output_dir)
         chart_4_event_impact(resources, output_dir)
         # chart_5_biome_seasonal_timeline(resources, output_dir)  # Removed per user request
-        chart_6_city_seasonal_prices(resources, output_dir)
+        chart_6_city_seasonal_prices(resources, biome_seasons, output_dir)
         
         print("\n" + "=" * 60)
         print("✓ All visualizations generated successfully!")
