@@ -88,7 +88,7 @@ func initialize() -> void:
 			currentRes = data
 		btn.find_child("Button").icon = data.texture
 		btn.find_child("Button").pressed.connect(on_res_clicked.bind(btn.name))
-		btn.find_child("Price").text = "$" + str(_getPrice(data))
+		btn.find_child("Price").text = str(_getPrice(data))
 	totalPrice = 0
 	currentCount = 0
 	_updateUI()
@@ -162,7 +162,7 @@ func _getPrice (data:ResourceData )->int:
 func _updateUI() -> void:
 	currentResTex.texture = currentRes.texture
 	buyCount.text = str(currentCount)
-	buyPriceLabel.text = "$" + str(totalPrice)
+	buyPriceLabel.text = str(totalPrice)
 	return
 
 var uiState :bool = true

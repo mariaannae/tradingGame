@@ -153,7 +153,7 @@ func end_turn() -> void:
 	# Check if event should occur based on probability
 	var roll = randf()  # Returns value between 0.0 and 1.0
 	
-	if roll < event_probability and event_manager:
+	if roll < event_probability and event_manager and not event_manager.all_events.is_empty():
 		# Trigger event - the popup will show and signal will emit when closed
 		event_manager.trigger_random_event()
 	else:

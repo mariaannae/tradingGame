@@ -118,6 +118,9 @@ func _on_travel_confirmed(city_name: String, cost: int) -> void:
 	if city_name != player_node.current_city_name:
 		player_node.travel_to_city(city_name)
 	
+	# Wait for travel UI to fully close before triggering events
+	await get_tree().process_frame
+	
 	# Now check for events (event popup will show if event occurs)
 	# The event popup will show, then advance turn after it closes
 	if economy_manager:
@@ -140,7 +143,8 @@ func _advance_turn() -> void:
 	_update_turn_label()
 
 func _update_turn_label() -> void:
-	var seasonalTurn: int = turn_idx%TURNS_PER_SEASON_STEP + 1
+	var seasonalTurn: int = turn_idx % TURNS_PER_SEASON_STEP + 1
+	print("DEBUG: turn_idx=%d, seasonalTurn=%d (calculation: %d %% %d + 1)" % [turn_idx, seasonalTurn, turn_idx, TURNS_PER_SEASON_STEP])
 	$"UI/Control/UIStack/TurnLabel".text = "Turn: %d/%s" % [seasonalTurn, TURNS_PER_SEASON_STEP]
 
 
