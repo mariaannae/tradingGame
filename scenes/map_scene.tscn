@@ -46,7 +46,7 @@ city_name = "Tenzura"
 biome = "steppe"
 
 [node name="Meiyara" parent="Cities" instance=ExtResource("2_ne7uw")]
-position = Vector2(-320, 158)
+position = Vector2(-360, 96)
 city_name = "Meiyara"
 biome = "warm"
 
@@ -63,7 +63,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 0
 script = ExtResource("13_l1wjf")
 
 [node name="ModalOverlay" type="ColorRect" parent="UI/EventPopup"]

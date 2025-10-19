@@ -40,9 +40,10 @@ func _ready() -> void:
 	# Hook up the End Turn button
 	$"UI/Control/UIStack/EndTurnButton".pressed.connect(_on_end_turn_pressed)
 	
-	# Hook up travel UI signal
+	# Hook up travel UI signals
 	if travel_ui:
 		travel_ui.travel_confirmed.connect(_on_travel_confirmed)
+		travel_ui.ui_fully_hidden.connect(_on_travel_ui_hidden)
 	
 	# Hook up economy manager event completion signal
 	if economy_manager:
@@ -118,8 +119,11 @@ func _on_travel_confirmed(city_name: String, cost: int) -> void:
 	if city_name != player_node.current_city_name:
 		player_node.travel_to_city(city_name)
 	
-	# Wait for travel UI to fully close before triggering events
-	await get_tree().process_frame
+	# Note: We don't trigger events here - wait for ui_fully_hidden signal
+
+func _on_travel_ui_hidden() -> void:
+	"""Called when TravelUI is fully hidden - now safe to show event popup"""
+	print("Travel UI fully hidden, checking for events...")
 	
 	# Now check for events (event popup will show if event occurs)
 	# The event popup will show, then advance turn after it closes

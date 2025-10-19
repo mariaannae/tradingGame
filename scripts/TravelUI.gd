@@ -1,6 +1,7 @@
 extends Control
 
 signal travel_confirmed(city_name: String, cost: int)
+signal ui_fully_hidden
 
 # References
 @onready var panel = $Panel
@@ -113,6 +114,9 @@ func _on_confirm_pressed() -> void:
 	print("Travel confirmed: %s, Cost: %d" % [selected_city_name, selected_cost])
 	travel_confirmed.emit(selected_city_name, selected_cost)
 	hide()
+	# Wait one frame to ensure UI is fully hidden before emitting signal
+	await get_tree().process_frame
+	ui_fully_hidden.emit()
 
 func _on_close_requested() -> void:
 	"""Handle window close (optional escape mechanism)"""
@@ -121,3 +125,6 @@ func _on_close_requested() -> void:
 	selected_cost = 0
 	travel_confirmed.emit(selected_city_name, selected_cost)
 	hide()
+	# Wait one frame to ensure UI is fully hidden before emitting signal
+	await get_tree().process_frame
+	ui_fully_hidden.emit()
