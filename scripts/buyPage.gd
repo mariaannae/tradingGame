@@ -90,17 +90,23 @@ func initialize() -> void:
 		btn.find_child("Button").icon = data.texture
 		btn.find_child("Button").pressed.connect(on_res_clicked.bind(btn.name))
 		btn.find_child("Price").text = str(_getPrice(data))
-		var hint : TextureRect = btn.find_child("HintTexture") 
-		if _getPrice(data) == data.base_price:
-			hint.visible = false
-		elif _getPrice(data) > data.base_price:
-			hint.visible = true
-			hint.modulate=Color.SEA_GREEN
-			hint.rotation_degrees=180
+		var hint : TextureRect = btn.find_child("HintTexture")
+		var current_price = _getPrice(data)
+		
+		# Show indicator based on deviation from base price
+		hint.visible = true
+		if current_price == data.base_price:
+			# Show dash (horizontal line) when price equals base price
+			hint.modulate = Color.DARK_GRAY
+			hint.rotation_degrees = 90
+		elif current_price > data.base_price:
+			# Show green arrow pointing up for price increase
+			hint.modulate = Color.SEA_GREEN
+			hint.rotation_degrees = 180
 		else:
-			hint.visible = true
-			hint.modulate=Color.DARK_RED
-			hint.rotation_degrees=0
+			# Show red arrow pointing down for price decrease
+			hint.modulate = Color.DARK_RED
+			hint.rotation_degrees = 0
 		
 	totalPrice = 0
 	currentCount = 0

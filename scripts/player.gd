@@ -48,11 +48,19 @@ func set_current_city(city_node: Node2D) -> void:
 		push_error("Invalid city node!")
 		return
 	
+	# Clear highlight from previous city
+	if current_city_node != null and current_city_node.has_method("set_as_current_city"):
+		current_city_node.set_as_current_city(false)
+	
 	current_city_node = city_node
 	current_city_name = city_node.city_name
 	
 	# Move player sprite to city position
 	global_position = city_node.global_position
+	
+	# Highlight the new current city
+	if current_city_node.has_method("set_as_current_city"):
+		current_city_node.set_as_current_city(true)
 	
 	# Emit signal
 	player_moved.emit(current_city_name)

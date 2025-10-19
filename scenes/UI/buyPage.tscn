@@ -13,7 +13,7 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_g5avq")
 grid = NodePath("bg/GridContainer")
-buyPriceLabel = NodePath("bg/BuyPirce")
+buyPriceLabel = NodePath("bg/BuyPrice")
 currentResTex = NodePath("bg/CurrentRes")
 buyCount = NodePath("bg/BuyCount")
 buyButton = NodePath("bg/BuyButton")
@@ -114,7 +114,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BuyPirce" type="Label" parent="bg"]
+[node name="BuyPrice" type="Label" parent="bg"]
 layout_mode = 0
 offset_left = 489.0
 offset_top = 549.0

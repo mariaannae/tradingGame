@@ -19,6 +19,9 @@ var tooltip_label: Label
 # Resource data cache
 var resource_data: Dictionary = {}
 
+# Current city status
+var is_current_city: bool = false
+
 func _ready() -> void:
 	input_pickable = true
 	
@@ -287,3 +290,48 @@ func _on_resource_icon_mouse_entered(resource_name: String, icon_node: Control) 
 
 func _on_resource_icon_mouse_exited() -> void:
 	hide_tooltip()
+
+func set_as_current_city(is_current: bool) -> void:
+	"""Update visual indicator for current city"""
+	is_current_city = is_current
+	
+	if name_background == null:
+		return
+	
+	# Get the existing style or create new one
+	var style: StyleBoxFlat
+	if name_background.has_theme_stylebox_override("panel"):
+		style = name_background.get_theme_stylebox("panel").duplicate()
+	else:
+		style = StyleBoxFlat.new()
+		var biome_color = get_biome_color()
+		style.bg_color = biome_color
+		style.corner_radius_top_left = 5
+		style.corner_radius_top_right = 5
+		style.corner_radius_bottom_left = 5
+		style.corner_radius_bottom_right = 5
+	
+	if is_current:
+		# Golden border and slight glow for current city
+		style.border_width_left = 3
+		style.border_width_right = 3
+		style.border_width_top = 3
+		style.border_width_bottom = 3
+		style.border_color = Color(0.85, 0.65, 0.13)  # Golden color #DAA520
+		
+		# Add a subtle golden shadow/glow
+		style.shadow_color = Color(0.85, 0.65, 0.13, 0.4)  # Semi-transparent gold
+		style.shadow_size = 4
+		style.shadow_offset = Vector2(0, 0)
+	else:
+		# Normal subtle border
+		style.border_width_left = 1
+		style.border_width_right = 1
+		style.border_width_top = 1
+		style.border_width_bottom = 1
+		style.border_color = Color(0, 0, 0, 0.5)
+		
+		# Remove shadow
+		style.shadow_size = 0
+	
+	name_background.add_theme_stylebox_override("panel", style)
