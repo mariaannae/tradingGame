@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://c5ouyy55xd8a4"]
 
 [ext_resource type="Script" uid="uid://58hspysnpalq" path="res://scripts/buyPage.gd" id="1_g5avq"]
-[ext_resource type="Texture2D" uid="uid://df6s70kjyunsl" path="res://art/buypage_parchment.png" id="1_phw5v"]
+[ext_resource type="Texture2D" uid="uid://ybbxcfm6tusy" path="res://art/buypage_parchment.png" id="1_phw5v"]
 [ext_resource type="Texture2D" uid="uid://dybpabgccjg76" path="res://art/resources/strawberry.png" id="4_brf3o"]
 [ext_resource type="Texture2D" uid="uid://bhyndc8qgolq" path="res://art/add.png" id="5_jor5y"]
 [ext_resource type="Texture2D" uid="uid://ir14p7jn27q6" path="res://art/Close.png" id="5_uvivu"]
-[ext_resource type="Texture2D" uid="uid://x20yxluek5hq" path="res://art/subtract.png" id="6_0jqui"]
+[ext_resource type="Texture2D" uid="uid://egovts5qx2ff" path="res://art/subtract.png" id="6_0jqui"]
 [ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="7_uvivu"]
 
 [node name="BuyPage" type="Control" node_paths=PackedStringArray("grid", "buyPriceLabel", "currentResTex", "buyCount", "buyButton", "sellButton")]

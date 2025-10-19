@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://shs7tm7tjuxb"]
+[gd_scene load_steps=6 format=3 uid="uid://shs7tm7tjuxb"]
 
 [ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="1_dewdo"]
 [ext_resource type="Texture2D" uid="uid://cd3kdwp61t0ue" path="res://art/resources/beans.png" id="2_cj7u0"]
+[ext_resource type="Texture2D" uid="uid://c23tkjrdiggmf" path="res://art/triangle.png" id="3_cj7u0"]
 
 [sub_resource type="Theme" id="Theme_dewdo"]
 
@@ -11,6 +12,8 @@
 custom_minimum_size = Vector2(165, 96)
 layout_mode = 3
 anchors_preset = 0
+offset_right = 165.0
+offset_bottom = 96.0
 size_flags_horizontal = 3
 
 [node name="Button" type="Button" parent="."]
@@ -23,12 +26,23 @@ icon = ExtResource("2_cj7u0")
 
 [node name="Price" type="Label" parent="."]
 layout_mode = 0
-offset_left = 95.0
-offset_top = 3.0
-offset_right = 159.0
-offset_bottom = 93.0
+offset_left = 77.0
+offset_top = 4.0
+offset_right = 141.0
+offset_bottom = 94.0
 theme = SubResource("Theme_4o7rm")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "$100"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HintTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 34.0
+offset_right = 161.0
+offset_bottom = 66.0
+pivot_offset = Vector2(16, 16)
+mouse_filter = 2
+texture = ExtResource("3_cj7u0")
+expand_mode = 1
