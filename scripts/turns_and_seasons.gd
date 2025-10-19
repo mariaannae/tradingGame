@@ -23,6 +23,7 @@ var player_node: Node2D = null
 var travel_ui: Control = null
 var buy_page: Node = null
 var economy_manager: Node = null
+var game_over_popup: Control = null
 
 func _ready() -> void:
 	_load_resources()
@@ -36,6 +37,7 @@ func _ready() -> void:
 	travel_ui = $"UI/TravelUI"
 	buy_page = $"UI/BuyPage"
 	economy_manager = $"EconomyManager"
+	game_over_popup = $"UI/GameOverPopup"
 	
 	# Hook up the End Turn button
 	$"UI/Control/UIStack/EndTurnButton".pressed.connect(_on_end_turn_pressed)
@@ -48,6 +50,11 @@ func _ready() -> void:
 	# Hook up economy manager event completion signal
 	if economy_manager:
 		economy_manager.event_handling_complete.connect(_on_event_handling_complete)
+		economy_manager.game_over.connect(_on_game_over)
+	
+	# Hook up game over popup
+	if game_over_popup:
+		game_over_popup.restart_requested.connect(_on_restart_requested)
 	
 	_update_turn_label()
 
@@ -145,6 +152,53 @@ func _advance_turn() -> void:
 	_apply_current_seasons(false)
 	turn_advanced.emit(turn_idx)
 	_update_turn_label()
+	
+	# Check for loss condition after advancing turn
+	if economy_manager and player_node:
+		var current_season = city_season.get(player_node.current_city_name, "spring")
+		if economy_manager.check_loss_condition(current_season):
+			_trigger_game_over()
+
+func _trigger_game_over() -> void:
+	"""Trigger the game over state"""
+	if game_over_popup and economy_manager:
+		economy_manager.game_over.emit()
+		game_over_popup.show_game_over(economy_manager.get_money(), turn_idx)
+
+func _on_game_over() -> void:
+	"""Handle game over signal from economy manager"""
+	print("Game Over!")
+	if game_over_popup and economy_manager:
+		game_over_popup.show_game_over(economy_manager.get_money(), turn_idx)
+
+func _on_restart_requested() -> void:
+	"""Restart the game"""
+	# Reset turn counter
+	turn_idx = 0
+	
+	# Reset city phases
+	for c in cities:
+		c["phase"] = 0
+	
+	# Rebuild schedules and apply initial seasons
+	_build_schedules_for_all()
+	_apply_current_seasons(true)
+	
+	# Reset economy manager (money and stock)
+	if economy_manager:
+		economy_manager.current_money = economy_manager.start_money
+		economy_manager.stock.clear()
+		economy_manager.eventNames.clear()
+		economy_manager._updateUI()
+	
+	# Respawn player at random city
+	if player_node:
+		player_node._initialize_location()
+	
+	# Update UI
+	_update_turn_label()
+	
+	print("Game restarted!")
 
 func _update_turn_label() -> void:
 	var seasonalTurn: int = turn_idx % TURNS_PER_SEASON_STEP + 1

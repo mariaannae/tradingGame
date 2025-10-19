@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bp408kebckug"]
+[gd_scene load_steps=17 format=3 uid="uid://bp408kebckug"]
 
 [ext_resource type="Script" uid="uid://bgcrj76vkkg6s" path="res://scripts/turns_and_seasons.gd" id="1_5m4q6"]
 [ext_resource type="PackedScene" uid="uid://dutxtsat7w2un" path="res://scenes/city.tscn" id="2_ne7uw"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://btravelui001" path="res://scenes/UI/TravelUI.tscn" id="12_travel"]
 [ext_resource type="Script" uid="uid://b5jc87om2rw51" path="res://scripts/event_popup.gd" id="13_l1wjf"]
 [ext_resource type="PackedScene" uid="uid://dr85sm1k03o1u" path="res://scenes/UI/CityWelcomePopup.tscn" id="14_welcome"]
+[ext_resource type="PackedScene" path="res://scenes/UI/GameOverPopup.tscn" id="15_gameover"]
 
 [node name="MapScene" type="Node2D"]
 script = ExtResource("1_5m4q6")
@@ -63,7 +64,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
 script = ExtResource("13_l1wjf")
 
 [node name="ModalOverlay" type="ColorRect" parent="UI/EventPopup"]
@@ -232,6 +232,8 @@ economyManager = NodePath("../../EconomyManager")
 turns = NodePath("../..")
 cityNodes = NodePath("../../Cities")
 welcomePopup = NodePath("../CityWelcomePopup")
+
+[node name="GameOverPopup" parent="UI" instance=ExtResource("15_gameover")]
 
 [node name="EconomyManager" type="Node" parent="." node_paths=PackedStringArray("UIGrid", "end_turn_button", "money_contorl")]
 script = ExtResource("9_raa3b")

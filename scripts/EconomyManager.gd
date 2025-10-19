@@ -2,6 +2,7 @@ extends Node
 class_name EconomyManager
 
 signal event_handling_complete
+signal game_over
 
 @export var start_money: int = 1000
 @export var event_probability: float = 1.0  # 0.0 to 1.0, where 1.0 = 100% chance
@@ -59,6 +60,108 @@ func initialize()-> void:
 	
 func get_money() -> int:
 	return current_money
+
+func get_minimum_resource_price(season: String) -> int:
+	"""Calculate the minimum price of any available resource in the current city"""
+	var map_scene = get_node(MapScenePath)
+	if not map_scene:
+		return 0
+	
+	var player = map_scene.get_node_or_null("Player")
+	if not player:
+		return 0
+	
+	var current_city_name = player.current_city_name
+	
+	# Get the available resources in the current city
+	var city_effective = map_scene.city_effective.get(current_city_name, {})
+	var available_resources: Array = city_effective.get("resources", [])
+	
+	# Find minimum price among available resources
+	var min_price = INF
+	for resource_name in available_resources:
+		if resource_name in resources_dict:
+			var resource: ResourceData = resources_dict[resource_name]
+			var price = resource.get_price(season, eventNames)
+			if price < min_price:
+				min_price = price
+	
+	return int(min_price) if min_price != INF else 0
+
+func has_sellable_inventory(season: String) -> bool:
+	"""Check if player has any items that can be sold in the current city"""
+	var map_scene = get_node(MapScenePath)
+	if not map_scene:
+		return false
+	
+	var player = map_scene.get_node_or_null("Player")
+	if not player:
+		return false
+	
+	var current_city_name = player.current_city_name
+	
+	# Get the available resources in the current city
+	var city_effective = map_scene.city_effective.get(current_city_name, {})
+	var available_resources: Array = city_effective.get("resources", [])
+	
+	# Check if player has any of the available resources
+	for item_name in stock.keys():
+		if stock[item_name] > 0 and item_name in available_resources:
+			return true
+	
+	return false
+
+func get_minimum_travel_cost() -> int:
+	"""Get the minimum cost to travel to any city from current location"""
+	var map_scene = get_node(MapScenePath)
+	if not map_scene:
+		return 0
+	
+	var player = map_scene.get_node_or_null("Player")
+	if not player:
+		return 0
+	
+	var all_cities = player.get_all_cities()
+	var min_cost = INF
+	
+	for city in all_cities:
+		if city.city_name != player.current_city_name:
+			var cost = player.calculate_travel_cost(city)
+			if cost < min_cost:
+				min_cost = cost
+	
+	return int(min_cost) if min_cost != INF else 0
+
+func check_loss_condition(season: String) -> bool:
+	"""Check if player has lost (no sellable inventory AND can't afford to buy OR travel)"""
+	# Player only loses if they have no inventory that can be sold in the current city
+	var has_sellable = has_sellable_inventory(season)
+	if has_sellable:
+		print("Loss check: Player has sellable inventory, continuing game")
+		return false
+	
+	# Get minimum resource price in current city
+	var min_resource_price = get_minimum_resource_price(season)
+	
+	# Get minimum travel cost to any other city
+	var min_travel_cost = get_minimum_travel_cost()
+	
+	# Player loses if they can't afford to buy anything AND can't afford to travel
+	var cant_buy = current_money < min_resource_price
+	var cant_travel = current_money < min_travel_cost
+	
+	print("Loss check: money=%d, min_buy=%d, min_travel=%d, cant_buy=%s, cant_travel=%s" % [current_money, min_resource_price, min_travel_cost, cant_buy, cant_travel])
+	
+	var should_lose = cant_buy and cant_travel
+	if should_lose:
+		print("GAME OVER: Player has no sellable inventory, can't buy (need %d), and can't travel (need %d)" % [min_resource_price, min_travel_cost])
+	
+	return should_lose
+
+func check_and_trigger_loss(season: String) -> void:
+	"""Check loss condition and emit game_over signal if player has lost"""
+	if check_loss_condition(season):
+		game_over.emit()
 	
 func try_to_buy(itemName: String, quantity: int, season: String = "") -> bool:
 	if quantity <= 0:
@@ -73,6 +176,9 @@ func try_to_buy(itemName: String, quantity: int, season: String = "") -> bool:
 		stock[itemName] = current_count + quantity
 		print("Bought %d x %s for %.2f, now have %d" % [quantity, item.category, total_cost, stock[itemName]])
 		_updateUI()
+		
+		# Check for loss condition after purchase
+		check_and_trigger_loss(season)
 		return true
 	else:
 		print("Cannot afford %d x %s (need %.2f)" % [quantity, item.category, total_cost])

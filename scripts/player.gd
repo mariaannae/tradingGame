@@ -4,7 +4,7 @@ signal player_moved(city_name: String)
 signal game_started(city_name: String)
 
 # Configuration
-@export var travel_cost_per_unit: float = 0.25
+@export var travel_cost_per_unit: float = 0.2
 
 # Current state
 var current_city_name: String = ""
