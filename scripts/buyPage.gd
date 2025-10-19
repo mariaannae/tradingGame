@@ -70,6 +70,7 @@ func _show_wrong_city_message(city_name: String) -> void:
 
 
 func initialize() -> void:
+	_refresh_buystate()
 	for child in grid.get_children():
 		child.queue_free()
 	await get_tree().process_frame
@@ -114,24 +115,39 @@ func on_sub_clicked()-> void:
 	if currentCount < 0:
 		currentCount =0
 	totalPrice = _getPrice(currentRes)*currentCount
+	
+	if totalPrice > economyManager.current_money:
+		buyButton.disabled = true
+	else :
+		buyButton.disabled = false
+	if currentCount > economyManager.stock.get(get_currentRes_name(),0):
+		sellButton.disabled = true
+	else :
+		sellButton.disabled = false
+		
 	_updateUI()
 	return
 
 func on_add_clicked()-> void:
 	currentCount += 1
 	totalPrice = _getPrice(currentRes)*currentCount
+	
+	if totalPrice > economyManager.current_money:
+		buyButton.disabled = true
+	else :
+		buyButton.disabled = false
+	if currentCount > economyManager.stock.get(get_currentRes_name(),0):
+		sellButton.disabled = true
+	else :
+		sellButton.disabled = false
+	
 	_updateUI()
 	return
 
 func on_buy_clicked()-> bool:
-	var name:String
-	for key in economyManager.resources_dict.keys():
-		if  economyManager.resources_dict.get(key,0) == currentRes:
-			name=key
-			break
-	if economyManager.try_to_buy(name, currentCount, currentCity.current_season):
-		totalPrice = 0
-		currentCount = 0
+
+	if economyManager.try_to_buy(get_currentRes_name(), currentCount, currentCity.current_season):
+		_refresh_buystate()
 		_updateUI()
 		return true
 	return false
@@ -140,19 +156,18 @@ func on_sell_clicked() -> bool:
 	if currentCount <= 0:
 		return false
 	
-	var name: String
-	for key in economyManager.resources_dict.keys():
-		if economyManager.resources_dict[key] == currentRes:
-			name = key
-			break
-	
-	if economyManager.try_to_sell(name, currentCount, currentCity.current_season):
+	if economyManager.try_to_sell(get_currentRes_name(), currentCount, currentCity.current_season):
 		# Reset count and total
-		currentCount = 0
-		totalPrice = 0
+		_refresh_buystate()
 		_updateUI()
 		return true
 	return false
+	
+func get_currentRes_name()->String:
+	for key in economyManager.resources_dict.keys():
+		if economyManager.resources_dict[key] == currentRes:
+			return key
+	return ""
 
 func on_res_clicked(name:String)-> void:
 
@@ -162,7 +177,12 @@ func on_res_clicked(name:String)-> void:
 	
 func _getPrice (data:ResourceData )->int:
 	return economyManager.get_price(data,currentCity.current_season)
-	 
+
+func _refresh_buystate():
+	currentCount = 0
+	totalPrice = 0
+	buyButton.disabled=false
+	sellButton.disabled=false
 	
 #region --------------UI------------------
 @export var buyPriceLabel : Label
