@@ -17,6 +17,7 @@ var city_season := {}            # id -> String
 var city_effective := {}         # id -> Dictionary
 
 var turn_idx := 0
+var ogg_stream = AudioStreamOggVorbis.load_from_file("res://art/undanced-dance.ogg")
 
 # References to other nodes
 var player_node: Node2D = null
@@ -55,6 +56,13 @@ func _ready() -> void:
 	# Hook up game over popup
 	if game_over_popup:
 		game_over_popup.restart_requested.connect(_on_restart_requested)
+	
+	# Set up background music + loop
+	ogg_stream.loop = true
+	var audio_player = AudioStreamPlayer.new()
+	audio_player.stream = ogg_stream
+	add_child(audio_player)
+	audio_player.play()
 	
 	_update_turn_label()
 
