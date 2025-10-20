@@ -17,7 +17,6 @@ var city_season := {}            # id -> String
 var city_effective := {}         # id -> Dictionary
 
 var turn_idx := 0
-var ogg_stream = AudioStreamOggVorbis.load_from_file("res://art/undanced-dance.ogg")
 
 # References to other nodes
 var player_node: Node2D = null
@@ -56,13 +55,6 @@ func _ready() -> void:
 	# Hook up game over popup
 	if game_over_popup:
 		game_over_popup.restart_requested.connect(_on_restart_requested)
-	
-	# Set up background music + loop
-	ogg_stream.loop = true
-	var audio_player = AudioStreamPlayer.new()
-	audio_player.stream = ogg_stream
-	add_child(audio_player)
-	audio_player.play()
 	
 	_update_turn_label()
 
@@ -310,7 +302,7 @@ func _get_city_resources(biome: String, season: String) -> Array[String]:
 		# Check if resource is local to this biome
 		if resource.is_local_to(biome):
 			# Check if it's in season (or if we want to show all local resources)
-			if season in resource.favored_season:
-				result.append(resource_name)
+			#if season in resource.favored_season:
+			result.append(resource_name)
 	
 	return result

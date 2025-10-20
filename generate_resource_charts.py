@@ -410,32 +410,22 @@ def chart_6_city_seasonal_prices(resources: Dict, biome_seasons: Dict, output_di
         # Create the chart
         fig, ax = plt.subplots(figsize=(12, 8))
         
-        # Plot price lines for each available resource - only during their favored seasons
-        # (Resources are only available for trade during favored seasons in the game)
+        # Plot price lines for each available resource across all seasons
+        # (Resources are available year-round with price multipliers)
         for res_name, res_data in available_resources.items():
-            favored_seasons = res_data.get('favored_season', [])
-            
-            # Only plot if resource has favored seasons
-            if not favored_seasons:
-                continue
-            
-            # Create lists for positions and prices (only for positions where season is favored)
+            # Create lists for all positions and prices in the seasonal sequence
             plot_positions = []
             plot_prices = []
-            plot_labels = []
             
             for pos, season in enumerate(seasonal_sequence):
-                if season in favored_seasons:
-                    price = calculate_price(res_data, season, [])  # No events
-                    plot_positions.append(pos)
-                    plot_prices.append(price)
-                    plot_labels.append(season.title())
+                price = calculate_price(res_data, season, [])  # No events
+                plot_positions.append(pos)
+                plot_prices.append(price)
             
-            # Only plot if we have data points
-            if plot_positions:
-                ax.plot(plot_positions, plot_prices, marker='o', linewidth=2.5,
-                       color=resource_colors[res_name], label=res_name.replace('-', ' ').title(),
-                       markersize=8, alpha=0.8)
+            # Plot the line for this resource
+            ax.plot(plot_positions, plot_prices, marker='o', linewidth=2.5,
+                   color=resource_colors[res_name], label=res_name.replace('-', ' ').title(),
+                   markersize=8, alpha=0.8)
         
         # Styling
         ax.set_xlabel('Seasonal Position', fontsize=12, fontweight='bold')
