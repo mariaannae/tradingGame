@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bgcrj76vkkg6s" path="res://scripts/turns_and_seasons.gd" id="1_5m4q6"]
 [ext_resource type="PackedScene" uid="uid://dutxtsat7w2un" path="res://scenes/city.tscn" id="2_ne7uw"]
-[ext_resource type="Texture2D" uid="uid://dvp0ln4xi3ao0" path="res://art/map.png" id="2_vsh3c"]
+[ext_resource type="Texture2D" uid="uid://blly5ov4ih8mm" path="res://art/map.png" id="2_vsh3c"]
 [ext_resource type="Script" uid="uid://dnpfvojfm741g" path="res://scripts/background_scaling.gd" id="3_jlqwp"]
-[ext_resource type="Texture2D" uid="uid://duq6d10h8u2rk" path="res://art/stock_parchment.png" id="4_parchment"]
+[ext_resource type="Texture2D" uid="uid://brglk4t545auk" path="res://art/stock_parchment.png" id="4_parchment"]
 [ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="5_jlqwp"]
 [ext_resource type="Script" uid="uid://uyrt6sms65sr" path="res://scripts/EconomyManager.gd" id="9_raa3b"]
 [ext_resource type="PackedScene" uid="uid://c5ouyy55xd8a4" path="res://scenes/UI/buyPage.tscn" id="10_tk4s2"]
@@ -12,9 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://dbum560abgpsd" path="res://scenes/player.tscn" id="11_f0c3g"]
 [ext_resource type="Script" uid="uid://fmmff4hjpyih" path="res://scripts/random_event_manager.gd" id="11_od1u7"]
 [ext_resource type="PackedScene" uid="uid://shs7tm7tjuxb" path="res://scenes/UI/resourceButton.tscn" id="11_xb8oc"]
-[ext_resource type="PackedScene" uid="uid://btravelui001" path="res://scenes/UI/TravelUI.tscn" id="12_travel"]
+[ext_resource type="PackedScene" path="res://scenes/UI/TravelUI.tscn" id="12_travel"]
 [ext_resource type="Script" uid="uid://b5jc87om2rw51" path="res://scripts/event_popup.gd" id="13_l1wjf"]
-[ext_resource type="PackedScene" uid="uid://dr85sm1k03o1u" path="res://scenes/UI/CityWelcomePopup.tscn" id="14_welcome"]
+[ext_resource type="PackedScene" path="res://scenes/UI/CityWelcomePopup.tscn" id="14_welcome"]
 [ext_resource type="PackedScene" path="res://scenes/UI/GameOverPopup.tscn" id="15_gameover"]
 
 [node name="MapScene" type="Node2D"]
@@ -28,26 +28,26 @@ script = ExtResource("3_jlqwp")
 [node name="Cities" type="Node2D" parent="."]
 
 [node name="Draugaholt" parent="Cities" instance=ExtResource("2_ne7uw")]
-position = Vector2(-327, -260)
+position = Vector2(-262, -221)
 city_name = "Draugaholt"
 
 [node name="Yalanga" parent="Cities" instance=ExtResource("2_ne7uw")]
-position = Vector2(275, 123)
+position = Vector2(342, 19)
 city_name = "Yalanga"
 biome = "warm"
 
 [node name="Corvienne" parent="Cities" instance=ExtResource("2_ne7uw")]
-position = Vector2(-236, -13)
+position = Vector2(42, -136)
 city_name = "Corvienne"
 biome = "coastal"
 
 [node name="Tenzura" parent="Cities" instance=ExtResource("2_ne7uw")]
-position = Vector2(385, -26)
+position = Vector2(16, 154)
 city_name = "Tenzura"
 biome = "steppe"
 
 [node name="Meiyara" parent="Cities" instance=ExtResource("2_ne7uw")]
-position = Vector2(-360, 96)
+position = Vector2(-313, -35)
 city_name = "Meiyara"
 biome = "warm"
 

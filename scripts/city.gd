@@ -2,7 +2,8 @@ extends Area2D
 
 @export var city_name: String = ""
 @export var icon_sprite_frames: SpriteFrames   # now supports animated icons
-@export_enum("cold", "steppe", "coastal", "warm") var biome: String = "cold"
+@export_enum("cold", "steppe", "coastal", "warm") 
+var biome: String = "cold"
 
 signal city_clicked(id: String)
 
