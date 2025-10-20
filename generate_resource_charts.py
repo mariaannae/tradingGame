@@ -397,15 +397,8 @@ def chart_6_city_seasonal_prices(resources: Dict, biome_seasons: Dict, output_di
         
         print(f"    Using seasonal sequence: {seasonal_sequence}")
         
-        # Find resources available in this city (those with this biome in local_biomes)
-        available_resources = {}
-        for res_name, res_data in resources.items():
-            if biome in res_data.get('local_biomes', []):
-                available_resources[res_name] = res_data
-        
-        if not available_resources:
-            print(f"  ⚠ No resources available in {city_name}")
-            continue
+        # All resources are available in all cities (matching game code)
+        available_resources = resources
         
         # Create the chart
         fig, ax = plt.subplots(figsize=(12, 8))
