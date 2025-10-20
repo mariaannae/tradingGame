@@ -249,3 +249,5 @@ money_contorl = NodePath("../UI/MoneyControl")
 script = ExtResource("11_od1u7")
 
 [node name="Player" parent="." instance=ExtResource("11_f0c3g")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

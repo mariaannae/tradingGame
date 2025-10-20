@@ -27,6 +27,15 @@ var economy_manager: Node = null
 var game_over_popup: Control = null
 
 func _ready() -> void:
+	# --- Background music setup ---
+	var music_player := AudioStreamPlayer.new()
+	music_player.stream = load("res://art/undanced-dance.ogg")
+	music_player.autoplay = false
+	music_player.volume_db = -6
+	music_player.stream.loop = true  # Loop continuously
+	add_child(music_player)
+	music_player.play()
+
 	_load_resources()
 	_load_biome_sequences()
 	_register_cities()
