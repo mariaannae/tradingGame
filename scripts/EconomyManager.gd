@@ -5,7 +5,7 @@ signal event_handling_complete
 signal game_over
 
 @export var start_money: int = 1000
-@export var event_probability: float = 1.0  # 0.0 to 1.0, where 1.0 = 100% chance
+@export var event_probability: float = 0.5  # 0.0 to 1.0, where 1.0 = 100% chance
 @export var MapScenePath: NodePath
 var current_money: int = 0
 var stock: Dictionary = {}

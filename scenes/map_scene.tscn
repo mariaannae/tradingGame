@@ -37,7 +37,7 @@ city_name = "Yalanga"
 biome = "warm"
 
 [node name="Corvienne" parent="Cities" instance=ExtResource("2_ne7uw")]
-position = Vector2(42, -136)
+position = Vector2(-96, -143)
 city_name = "Corvienne"
 biome = "coastal"
 
