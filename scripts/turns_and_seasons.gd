@@ -15,6 +15,7 @@ var cities := []                 # list of dictionaries (metadata + node)
 var city_schedule := {}          # id -> Array[String]
 var city_season := {}            # id -> String
 var city_effective := {}         # id -> Dictionary
+var city_seasonal := {}         # id -> Dictionary
 
 var turn_idx := 0
 
@@ -293,6 +294,13 @@ func _effective_for_city(city: Dictionary, season: String) -> Dictionary:
 		"resources": available_resources
 	}
 
+func _effective_for_season(city: Dictionary, season: String) -> Dictionary:
+	var biome := String(city.get("biome", ""))
+	var available_resources := _get_seasonal_resources(biome, season)
+	return {
+		"resources": available_resources
+}
+
 func _get_city_resources(biome: String, season: String) -> Array[String]:
 	var result: Array[String] = []
 	
@@ -304,5 +312,19 @@ func _get_city_resources(biome: String, season: String) -> Array[String]:
 			# Check if it's in season (or if we want to show all local resources)
 			#if season in resource.favored_season:
 		result.append(resource_name)
+	
+	return result
+
+func _get_seasonal_resources(biome: String, season: String) -> Array[String]:
+	var result: Array[String] = []
+	
+	for resource_name in all_resources.keys():
+		var resource: ResourceData = all_resources[resource_name]
+		
+		# Check if resource is local to this biome
+		if resource.is_local_to(biome):
+			# Check if it's in season (or if we want to show all local resources)
+			if season in resource.favored_season:
+				result.append(resource_name)
 	
 	return result

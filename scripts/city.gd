@@ -10,6 +10,7 @@ signal city_clicked(id: String)
 var effective := {}        # will hold computed stats later
 var current_season := ""   # "winter"/"spring"/"summer"/"fall"
 var available_resources: Array[String] = []
+var seasonal_resources: Array[String] = []
 
 # UI elements
 var name_background: Panel
@@ -172,9 +173,28 @@ func _input_event(_viewport, event, _shape_idx) -> void:
 		emit_signal("city_clicked", city_name)
 		print("city_clicked", city_name)
 
+func _get_seasonal_resources(biome: String, season: String) -> Array[String]:
+	var result: Array[String] = []
+	
+	for resource_name in resource_data.keys():
+		var data = resource_data[resource_name]
+		
+		# Defensive checks to avoid missing fields
+		if not (data.has("local_biomes") and data.has("favored_season")):
+			continue
+		
+		# Match biome (if the resource grows there)
+		if biome in data["local_biomes"]:
+			# Match season (only show if it's in season)
+			if season in data["favored_season"]:
+				result.append(resource_name)
+	
+	return result
+
 func set_season_visual(season: String, resources: Array[String] = []) -> void:
 	current_season = season
 	available_resources = resources
+	seasonal_resources = _get_seasonal_resources(biome,season)
 	
 	var t := $"Icon"
 	match season:
@@ -225,14 +245,14 @@ func update_export_display() -> void:
 	for child in resource_grid.get_children():
 		child.queue_free()
 	
-	if available_resources.is_empty():
+	if seasonal_resources.is_empty():
 		resource_grid.visible = false
 		return
 	
 	resource_grid.visible = true
 	
 	# Add resource icons
-	for resource_name in available_resources:
+	for resource_name in seasonal_resources:
 		if resource_data.has(resource_name):
 			var texture_path = resource_data[resource_name].get("texture", "")
 			if texture_path != "":

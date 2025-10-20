@@ -156,12 +156,14 @@ grow_horizontal = 0
 
 [node name="Label" type="Label" parent="UI/MoneyControl"]
 layout_mode = 0
-offset_left = -575.0
-offset_right = -477.0
-offset_bottom = 23.0
+offset_left = -629.0
+offset_top = -4.0
+offset_right = -458.0
+offset_bottom = 19.0
 scale = Vector2(1.3785383, 1.3785383)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Money: 1000"
+text = "Current Money: $1000"
+horizontal_alignment = 2
 
 [node name="Control" type="Control" parent="UI"]
 layout_mode = 3

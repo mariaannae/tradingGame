@@ -55,7 +55,7 @@ func initialize()-> void:
 	else:
 		push_warning("EventPopup not found")
 		
-	print("EconomySystem ready. Current money =", current_money)
+	print("EconomySystem ready. Current Money =", current_money)
 	
 	
 func get_money() -> int:
@@ -253,7 +253,7 @@ func _updateUI() -> void:
 		if label_node and label_node is Label:
 				label_node.text = str(stock.get(name,0))
 	var money_label_node = money_contorl.find_child("Label")
-	money_label_node.text=" Money: " + str(current_money)
+	money_label_node.text="Current Money: $" + str(current_money)
 	
 func end_turn() -> void:
 	# Check if event should occur based on probability
