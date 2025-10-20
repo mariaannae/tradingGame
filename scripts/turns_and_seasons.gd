@@ -300,9 +300,9 @@ func _get_city_resources(biome: String, season: String) -> Array[String]:
 		var resource: ResourceData = all_resources[resource_name]
 		
 		# Check if resource is local to this biome
-		if resource.is_local_to(biome):
+		#if resource.is_local_to(biome):
 			# Check if it's in season (or if we want to show all local resources)
 			#if season in resource.favored_season:
-			result.append(resource_name)
+		result.append(resource_name)
 	
 	return result

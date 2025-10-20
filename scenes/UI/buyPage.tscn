@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dybpabgccjg76" path="res://art/resources/strawberry.png" id="4_brf3o"]
 [ext_resource type="Texture2D" uid="uid://bhyndc8qgolq" path="res://art/add.png" id="5_jor5y"]
 [ext_resource type="Texture2D" uid="uid://ir14p7jn27q6" path="res://art/Close.png" id="5_uvivu"]
-[ext_resource type="Texture2D" uid="uid://egovts5qx2ff" path="res://art/subtract.png" id="6_0jqui"]
+[ext_resource type="Texture2D" uid="uid://x20yxluek5hq" path="res://art/subtract.png" id="6_0jqui"]
 [ext_resource type="StyleBox" uid="uid://p7nbonq4n65t" path="res://themes/button_style.tres" id="7_uvivu"]
 
 [node name="BuyPage" type="Control" node_paths=PackedStringArray("grid", "buyPriceLabel", "currentResTex", "buyCount", "buyButton", "sellButton")]
@@ -23,17 +23,16 @@ sellButton = NodePath("bg/SellButton")
 layout_mode = 0
 offset_left = -216.0
 offset_top = -6.0
-offset_right = 260.0
-offset_bottom = 642.0
+offset_right = 1010.0
+offset_bottom = 714.0
 texture = ExtResource("1_phw5v")
-expand_mode = 0
 
 [node name="CloseButton" type="Button" parent="bg"]
 layout_mode = 0
-offset_left = 609.0
-offset_top = 20.0
-offset_right = 652.0
-offset_bottom = 62.0
+offset_left = 1116.0
+offset_top = 48.0
+offset_right = 1159.0
+offset_bottom = 90.0
 theme_override_styles/normal = ExtResource("7_uvivu")
 
 [node name="TextureRect" type="TextureRect" parent="bg/CloseButton"]
@@ -49,28 +48,28 @@ expand_mode = 1
 
 [node name="GridContainer" type="GridContainer" parent="bg"]
 layout_mode = 0
-offset_left = 261.0
-offset_top = 47.0
-offset_right = 589.0
-offset_bottom = 300.0
+offset_left = 243.0
+offset_top = 70.0
+offset_right = 571.0
+offset_bottom = 323.0
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 15
-columns = 2
+columns = 5
 
 [node name="CurrentRes" type="TextureRect" parent="bg"]
 layout_mode = 0
-offset_left = 221.0
+offset_left = 769.0
 offset_top = 524.0
-offset_right = 301.0
+offset_right = 849.0
 offset_bottom = 604.0
 texture = ExtResource("4_brf3o")
 
 [node name="AddButton" type="Button" parent="bg"]
 layout_mode = 0
-offset_left = 436.0
-offset_top = 548.0
-offset_right = 479.0
-offset_bottom = 590.0
+offset_left = 959.0
+offset_top = 561.0
+offset_right = 1002.0
+offset_bottom = 603.0
 theme_override_styles/normal = ExtResource("7_uvivu")
 
 [node name="TextureRect" type="TextureRect" parent="bg/AddButton"]
@@ -86,10 +85,10 @@ expand_mode = 1
 
 [node name="SubtractButton" type="Button" parent="bg"]
 layout_mode = 0
-offset_left = 335.0
-offset_top = 549.0
-offset_right = 376.0
-offset_bottom = 590.0
+offset_left = 858.0
+offset_top = 562.0
+offset_right = 899.0
+offset_bottom = 603.0
 theme_override_styles/normal = ExtResource("7_uvivu")
 
 [node name="TextureRect" type="TextureRect" parent="bg/SubtractButton"]
@@ -105,10 +104,10 @@ expand_mode = 1
 
 [node name="BuyCount" type="Label" parent="bg"]
 layout_mode = 0
-offset_left = 382.0
-offset_top = 553.0
-offset_right = 430.0
-offset_bottom = 589.0
+offset_left = 905.0
+offset_top = 566.0
+offset_right = 953.0
+offset_bottom = 602.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "0"
 horizontal_alignment = 1
@@ -116,31 +115,31 @@ vertical_alignment = 1
 
 [node name="BuyPrice" type="Label" parent="bg"]
 layout_mode = 0
-offset_left = 489.0
-offset_top = 549.0
-offset_right = 541.0
-offset_bottom = 585.0
+offset_left = 896.0
+offset_top = 522.0
+offset_right = 962.0
+offset_bottom = 558.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "0"
+text = "Total: $0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BuyButton" type="Button" parent="bg"]
 layout_mode = 0
-offset_left = 569.0
-offset_top = 496.0
-offset_right = 660.0
-offset_bottom = 539.0
+offset_left = 1019.0
+offset_top = 518.0
+offset_right = 1110.0
+offset_bottom = 561.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = ExtResource("7_uvivu")
 text = "Buy"
 
 [node name="SellButton" type="Button" parent="bg"]
 layout_mode = 0
-offset_left = 570.0
-offset_top = 547.0
-offset_right = 661.0
-offset_bottom = 590.0
+offset_left = 1020.0
+offset_top = 569.0
+offset_right = 1111.0
+offset_bottom = 612.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = ExtResource("7_uvivu")
 text = "Sell"

@@ -200,7 +200,7 @@ func _refresh_buystate():
 func _updateUI() -> void:
 	currentResTex.texture = currentRes.texture
 	buyCount.text = str(currentCount)
-	buyPriceLabel.text = "$" + str(totalPrice)
+	buyPriceLabel.text = "Total: $" + str(totalPrice)
 	return
 
 var uiState :bool = true

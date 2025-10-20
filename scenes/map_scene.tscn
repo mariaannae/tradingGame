@@ -12,10 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://dbum560abgpsd" path="res://scenes/player.tscn" id="11_f0c3g"]
 [ext_resource type="Script" uid="uid://fmmff4hjpyih" path="res://scripts/random_event_manager.gd" id="11_od1u7"]
 [ext_resource type="PackedScene" uid="uid://shs7tm7tjuxb" path="res://scenes/UI/resourceButton.tscn" id="11_xb8oc"]
-[ext_resource type="PackedScene" path="res://scenes/UI/TravelUI.tscn" id="12_travel"]
+[ext_resource type="PackedScene" uid="uid://btravelui001" path="res://scenes/UI/TravelUI.tscn" id="12_travel"]
 [ext_resource type="Script" uid="uid://b5jc87om2rw51" path="res://scripts/event_popup.gd" id="13_l1wjf"]
-[ext_resource type="PackedScene" path="res://scenes/UI/CityWelcomePopup.tscn" id="14_welcome"]
-[ext_resource type="PackedScene" path="res://scenes/UI/GameOverPopup.tscn" id="15_gameover"]
+[ext_resource type="PackedScene" uid="uid://dr85sm1k03o1u" path="res://scenes/UI/CityWelcomePopup.tscn" id="14_welcome"]
+[ext_resource type="PackedScene" uid="uid://c8vxm7r8qhqh3" path="res://scenes/UI/GameOverPopup.tscn" id="15_gameover"]
 
 [node name="MapScene" type="Node2D"]
 script = ExtResource("1_5m4q6")
