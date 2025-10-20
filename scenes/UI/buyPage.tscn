@@ -115,12 +115,12 @@ vertical_alignment = 1
 
 [node name="BuyPrice" type="Label" parent="bg"]
 layout_mode = 0
-offset_left = 896.0
+offset_left = 865.0
 offset_top = 522.0
-offset_right = 962.0
+offset_right = 989.0
 offset_bottom = 558.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Total: $0"
+text = "       Total: $0       "
 horizontal_alignment = 1
 vertical_alignment = 1
 
